@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "../studio-visiting-sanity/middleware.ts", "../studio-visiting-sanity/admin/auth.ts", "../studio-visiting-sanity/Sign-in.tsx", "../studio-visiting-sanity/UserAvatar.tsx"],
   "exclude": ["node_modules"]
 }
