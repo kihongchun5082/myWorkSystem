@@ -15,6 +15,7 @@ export async function GET(req: Request, { params }: { params: { companyName: str
 
  try {
   const visits = await getVisitsByCompany(companyName)
+  console.log('visits_getVisitByCompany: ',visits)
   return NextResponse.json(visits)
  } catch (error) {
   console.error('Error fetching visits:', error)

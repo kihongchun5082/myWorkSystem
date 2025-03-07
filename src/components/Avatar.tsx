@@ -11,9 +11,11 @@ export default function Avatar({
   size = "normal",
   highlight = false,
 }: imageType) {
+  
   const imageUrl = typeof image === "string" ? image : image && "asset" in image ? getSanityImageUrl(image) : undefined
 
   console.log('imageUrl_Avatar',imageUrl)
+
   return (
     <div className={getContainerStyle(size, highlight)}>
       <img

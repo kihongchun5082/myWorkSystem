@@ -1,9 +1,9 @@
 export type Visit = {
  visitName: string;
- visitCompany: string;
- visitedAt: string;
- nurseName: string;
- numCnslts: number;
- visitPhoto: string;
+ companyName: string;
+ when: string;
+ nurse: string;
+ numberConsults: number;
+ docImage: { asset: { _ref: string }} ;
  id: string;
 }

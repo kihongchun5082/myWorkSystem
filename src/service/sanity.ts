@@ -42,22 +42,23 @@ export const getSanityImageUrl = (image: { asset: { _ref: string }}) => {
  if (!image || !image.asset || !image.asset._ref) return null;
  
  const baseUrl = `https://cdn.sanity.io/images/${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}/${process.env.NEXT_PUBLIC_SANITY_DATASET}`
- const ref = image.asset._ref.replace("image-", "").replace("-png", ".png")
- const size = '?h=100'
 
- return `${baseUrl}/${ref}${size}`
+ const ref = image.asset._ref.replace("image-", "").replace("-png", ".png").replace("-jpg", ".jpg")
+ // const size = '?h=100'
+
+ return `${baseUrl}/${ref}`
 }
 
 export async function getVisitsByCompany(companyName: string) {
  return sanityClient.fetch(
-  `*[_type == "visit" && visitCompany._ref in *[_type == "company" && comanyName == "${companyName}"]._id]{
-  _id,
+  `*[_type == "visit" && visitCompany->companyName == "${companyName}"]  {
+  "id": _id,
   visitName,
-  visitCompany->{companyName},
-  visitedAt,
-  nurseName,
-  numCnslts,
-  visitPhoto
+  "companyName": visitCompany->companyName,
+  "when": visitedAt,
+  "nurse": nurseName,
+  "numberConsults": numCnslts,
+  "docImage": visitPhoto
   }`
  )
 }
