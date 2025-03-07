@@ -33,7 +33,6 @@ const menu = [
     const { data: session } = useSession()
     const user = session?.user
     console.log('session_Navbar: ',session)
-    // const providers = getProviders()
     
   return (
     <div className=" flex justify-between items-center px-4">

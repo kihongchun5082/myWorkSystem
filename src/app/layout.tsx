@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import { auth } from "@/auth";
 import Administrator from "./admin/page";
 import SWRConfigContext from "@/context/SWRConfigContext";
+import { CompanyProvider } from "@/context/CompanyContext";
 
 const openSans = Open_Sans({
   subsets: ["latin"],
@@ -30,7 +31,11 @@ export default function RootLayout({
             <Navbar />
           </header>
           <main className=" w-full flex justify-center min-h-full">
-            <SWRConfigContext>{children}</SWRConfigContext>
+            <SWRConfigContext>
+              <CompanyProvider>
+               {children}
+              </CompanyProvider>
+            </SWRConfigContext>
           </main>
         </Administrator>
       </body>

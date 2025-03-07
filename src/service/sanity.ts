@@ -28,6 +28,15 @@ export async function getCompanies() {
  )
 }
 
+export async function getVisits() {
+ return sanityClient.fetch(
+  `*[_type == "visit"] | order(visitName){
+  ...,
+  "visitCompany": *[ _type == "company" && companyName._ref == ^._id]}`
+ )
+}
+// {_id, visitName, visitedAt, nurseName, numCnslts, visitPhoto,
+
 export const getSanityImageUrl = (image: { asset: { _ref: string }}) => {
 
  if (!image || !image.asset || !image.asset._ref) return null;
@@ -39,8 +48,19 @@ export const getSanityImageUrl = (image: { asset: { _ref: string }}) => {
  return `${baseUrl}/${ref}${size}`
 }
 
-// export async function getVisitsByCompany(companyName: string) {
-//  return sanityClient.fetch(
-//   `*[_type = visits && visitCompany._ref in *[_type = company && comanyName == "${companyName}"]._id]`
-//  )
-// }
+export async function getVisitsByCompany(companyName: string) {
+ return sanityClient.fetch(
+  `*[_type == "visit" && visitCompany._ref in *[_type == "company" && comanyName == "${companyName}"]._id]{
+  _id,
+  visitName,
+  visitCompany->{companyName},
+  visitedAt,
+  nurseName,
+  numCnslts,
+  visitPhoto
+  }`
+ )
+}
+
+
+//  
