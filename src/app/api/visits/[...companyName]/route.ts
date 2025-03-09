@@ -10,12 +10,12 @@ export async function GET(req: Request, { params }: { params: { companyName: str
   return new Response('잘못된 사용자입니다.', {status: 401})
  }
  const{ companyName } = await params
-
- console.log('companyName_visit[companyName]: ',companyName)
+ // console.log('companyName_visit[companyName]: ',companyName)
 
  try {
   const visits = await getVisitsByCompany(companyName)
-  console.log('visits_getVisitByCompany: ',visits)
+  // console.log('visits_getVisitByCompany: ',visits)
+  
   return NextResponse.json(visits)
  } catch (error) {
   console.error('Error fetching visits:', error)

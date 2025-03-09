@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { useCompany } from "@/context/CompanyContext";
 import { Visit } from "@/model/visit";
 import { getSanityImageUrl } from "@/service/sanity";
@@ -7,50 +7,62 @@ import { PropagateLoader } from "react-spinners";
 import useSWR from "swr";
 
 export default function VisitListPage() {
-  const { selectedCompany } = useCompany()
-  
-  console.log('selectedCompany_VisitList: ',selectedCompany)
+  const { selectedCompany } = useCompany();
 
-  const { data: visits, isLoading: loadingVisits } = useSWR<Visit[]>
-  (selectedCompany ? `/api/visits/${selectedCompany}` : null)
+  console.log("selectedCompany_VisitList: ", selectedCompany);
 
-  console.log('visits_VisitList: ',visits)
+  const { data: visits, isLoading: loadingVisits } = useSWR<Visit[]>(
+    selectedCompany ? `/api/visits/${selectedCompany}` : null
+  );
+
+  // console.log("visits_VisitList: ", visits);
 
   return (
-  <div className=" w-full mt-4">
-    <h2 className=" text-lg font-bold text-center">{selectedCompany} 방문 기록</h2>
-    { loadingVisits ? <PropagateLoader size ={ 6 } color = { "blue" }/> : (
-      <ol className=" mt-2">
-        { visits?.length ? (visits.map((visit) => {
-          const imageUrl = visit.docImage ? getSanityImageUrl(visit.docImage) : null
+    <div className=" w-full mt-4">
+      <h2 className=" text-lg font-bold text-center">
+        {selectedCompany} 방문 기록
+      </h2>
+      {loadingVisits ? (
+        <PropagateLoader size={6} color="blue" />
+      ) : (
+        <ol className=" mt-2">
+          {visits?.length ? (
+            visits.map((visit) => (
 
-// const imageUrl = typeof image === "string" ? image : image && "asset" in image ? getSanityImageUrl(image) : undefined
-          console.log('imageUrl_VisitList: ',imageUrl)
-
-          return (
-           <li key={visit.id} className=" border-b p-2">
-             <p><strong>{visit.visitName}</strong> - {visit.when}</p> 
-             <p>간호사: {visit.nurse}, 상담 수: {visit.numberConsults}</p>
-            { imageUrl && (
-              <div className="w-24 h-24 relative">
-                <img src={imageUrl} 
-                  alt={`${visit.visitName} 사진`}
-                  // layout='fill'
-                  // objectFit="cover"
-                  className="rounded-md" />
-              </div>
-            )}
-          </li>
-          )
-        })
-        ) : (
-        <p className=" text-center text-gray-500">방문 기록이 없습니다.</p>
+              <li key={visit.id} className=" border-b p-2">
+                <p>
+                  <strong>{visit.visitName}</strong> - {visit.when}
+                </p>
+                <p>
+                  간호사: {visit.nurse}, 상담 수: {visit.numberConsults}
+                </p>
+                {visit.docImage?.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {visit.docImage?.map((image, index) => {
+                      const imageUrl = getSanityImageUrl(image) || undefined ;
+                      return (
+                        imageUrl && (
+                          <div key={index} className="w-24 h-24 relative">
+                          <img
+                            src = {imageUrl}
+                            alt={`${visit.visitName} 사진`}
+                            // layout='fill'
+                            // objectFit="cover"
+                            className="rounded-md"
+                          />
+                        </div>
+                        )
+                      );
+                    })}
+                  </div>
+                )}
+              </li>
+            ))
+          ) : (
+            <p className=" text-center text-gray-500">방문 기록이 없습니다.</p>
+          )}
+        </ol>
       )}
-      </ol>
-    )}
-  </div>
+    </div>
   );
 }
-
-
-

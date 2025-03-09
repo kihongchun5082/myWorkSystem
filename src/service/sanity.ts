@@ -44,9 +44,13 @@ export const getSanityImageUrl = (image: { asset: { _ref: string }}) => {
  const baseUrl = `https://cdn.sanity.io/images/${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}/${process.env.NEXT_PUBLIC_SANITY_DATASET}`
 
  const ref = image.asset._ref.replace("image-", "").replace("-png", ".png").replace("-jpg", ".jpg")
- // const size = '?h=100'
+ const paramsStart = '?'
+ const addParams = "&"
+ const shape = 'rect=70,20,120,150'
+ const size = 'h=300'
 
- return `${baseUrl}/${ref}`
+ return `${baseUrl}/${ref}${paramsStart}${size}`
+ // return `${baseUrl}/${ref}${paramsStart}${shape}${addParams}${size}`
 }
 
 export async function getVisitsByCompany(companyName: string) {
