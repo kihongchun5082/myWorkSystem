@@ -28,9 +28,10 @@ export default function CompanyBarPage() {
    { loadingCompanies ? <PropagateLoader size={8} color='red' /> : (!companies) && <p>{`회사가 없습니다.`}</p>
    }
    { companies && (
-     <ScrollableBar>
+    <ul className=" w-full flex gap-x-1.5">
+      {/* <ScrollableBar> */}
       {companies?.map((c:Company) => (
-       <button key={c.companyId} className=" flex flex-col items-center w-20" onClick={()=>setSelectedCompany(c.companyName || null)}>
+       <button key={c.companyName} className=" flex flex-col items-center w-20" onClick={()=>setSelectedCompany(c.companyName || null)}>
          <Avatar image={c.image} highlight />
          <p className=" w-full text-sm text-center text-ellipsis overflow-hidden ">{c.companyName}</p>
         </button>
@@ -41,7 +42,8 @@ export default function CompanyBarPage() {
          <p className=" w-full text-sm text-center text-ellipsis overflow-hidden ">{c.companyName}</p>
         </Link>
       ))} */}
-     </ScrollableBar>
+     {/* </ScrollableBar> */}
+    </ul>
     )}
      {/* {selectedCompany && <VisitListPage selectedCompany={selectedCompany} />
      } */}

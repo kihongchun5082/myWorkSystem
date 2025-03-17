@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
         hostname: 'lh3.googleusercontent.com'
       }
     ],
-    domains: ["cdn.sanity.co"],
+    domains: ["cdn.sanity.io"],
   }
 }
 

@@ -29,10 +29,10 @@ const menu = [
 ];
   export default function Navbar() {
     const pathName = usePathname();
-    console.log('pathName_Navbar: ',pathName)
+    // console.log('pathName_Navbar: ',pathName)
     const { data: session } = useSession()
     const user = session?.user
-    console.log('session_Navbar: ',session)
+    // console.log('session_Navbar: ',session)
     
   return (
     <div className=" flex justify-between items-center px-4">

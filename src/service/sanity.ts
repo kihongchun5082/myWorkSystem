@@ -47,7 +47,7 @@ export const getSanityImageUrl = (image: { asset: { _ref: string }}) => {
  const paramsStart = '?'
  const addParams = "&"
  const shape = 'rect=70,20,120,150'
- const size = 'h=300'
+ const size = 'h=500'
 
  return `${baseUrl}/${ref}${paramsStart}${size}`
  // return `${baseUrl}/${ref}${paramsStart}${shape}${addParams}${size}`
@@ -67,5 +67,10 @@ export async function getVisitsByCompany(companyName: string) {
  )
 }
 
-
-//  
+export async function getDocImageByCompanyName(companyName: string, slug: string) {
+ return sanityClient.fetch(
+  `*[_type == "visit" && visitCompany->companyName == $companyName && _id == $slug] {
+  "images": docImage[].asset->_ref}`,
+  { companyName, slug }
+ )
+}

@@ -11,7 +11,7 @@ const openSans = Open_Sans({
   subsets: ["latin"],
 });
 const session = await auth()
-console.log('session_layout: ',session)
+// console.log('session_layout: ',session)
 
 export const metadata: Metadata = {
   title: "Create Next App",

@@ -5,6 +5,7 @@ import { getSanityImageUrl } from "@/service/sanity";
 import Image from "next/image";
 import { PropagateLoader } from "react-spinners";
 import useSWR from "swr";
+import VisitListCard from "./VisitListCard";
 
 export default function VisitListPage() {
   const { selectedCompany } = useCompany();
@@ -18,44 +19,19 @@ export default function VisitListPage() {
   // console.log("visits_VisitList: ", visits);
 
   return (
-    <div className=" w-full mt-4">
+    <div className=" w-full mt-4 bg-amber-200 ">
       <h2 className=" text-lg font-bold text-center">
         {selectedCompany} 방문 기록
       </h2>
       {loadingVisits ? (
         <PropagateLoader size={6} color="blue" />
       ) : (
-        <ol className=" mt-2">
+        <ol className=" list-decimal mt-2">
           {visits?.length ? (
             visits.map((visit) => (
-
               <li key={visit.id} className=" border-b p-2">
-                <p>
-                  <strong>{visit.visitName}</strong> - {visit.when}
-                </p>
-                <p>
-                  간호사: {visit.nurse}, 상담 수: {visit.numberConsults}
-                </p>
-                {visit.docImage?.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {visit.docImage?.map((image, index) => {
-                      const imageUrl = getSanityImageUrl(image) || undefined ;
-                      return (
-                        imageUrl && (
-                          <div key={index} className="w-24 h-24 relative">
-                          <img
-                            src = {imageUrl}
-                            alt={`${visit.visitName} 사진`}
-                            // layout='fill'
-                            // objectFit="cover"
-                            className="rounded-md"
-                          />
-                        </div>
-                        )
-                      );
-                    })}
-                  </div>
-                )}
+                <span className=" shadow-xl font-sans font-normal font-stretch-200%">{visit.when}</span>
+                <VisitListCard visit={visit} />
               </li>
             ))
           ) : (
