@@ -10,7 +10,13 @@ import { CompanyProvider } from "@/context/CompanyContext";
 const openSans = Open_Sans({
   subsets: ["latin"],
 });
-const session = await auth()
+
+// const session = await auth()
+// Next.js 13 이상 (특히 App Router 사용 시)에서는 layout.tsx에서 auth()를 직접 호출할 수 없음.
+// Next.js의 auth() 함수는 서버 컴포넌트에서 요청(Request) 범위 내에서만 호출 가능하기 때문입니다.
+// 📌 해결 방법
+// ✅ layout.tsx에서 auth()를 직접 호출하지 않고, 필요한 페이지에서 auth()를 호출하도록 변경
+// ✅ 인증 정보가 필요할 경우, server component에서 auth()를 호출하여 prop으로 전달
 // console.log('session_layout: ',session)
 
 export const metadata: Metadata = {
@@ -25,7 +31,7 @@ export default function RootLayout({
 }: Props) {
   return (
     <html lang="en" className={openSans.className}>
-      <body className=" w-full max-w- screen-xl overflow-auto mx-auto bg-fuchsia-100">
+      <body className=" w-full max-w-screen-xl  overflow-auto mx-auto bg-red-200">
         <Administrator>
           <header className="sticky top-0 bg-white z-10 border-b">
             <Navbar />

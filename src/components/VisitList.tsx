@@ -6,17 +6,18 @@ import Image from "next/image";
 import { PropagateLoader } from "react-spinners";
 import useSWR from "swr";
 import VisitListCard from "./VisitListCard";
+import { useRouter } from "next/navigation";
 
 export default function VisitListPage() {
   const { selectedCompany } = useCompany();
-
   console.log("selectedCompany_VisitList: ", selectedCompany);
 
+  const router = useRouter()
   const { data: visits, isLoading: loadingVisits } = useSWR<Visit[]>(
     selectedCompany ? `/api/visits/${selectedCompany}` : null
   );
 
-  // console.log("visits_VisitList: ", visits);
+  console.log("visits_VisitList: ", visits);
 
   return (
     <div className=" w-full mt-4 bg-amber-200 ">
@@ -31,6 +32,12 @@ export default function VisitListPage() {
             visits.map((visit) => (
               <li key={visit.id} className=" border-b p-2">
                 <span className=" shadow-xl font-sans font-normal font-stretch-200%">{visit.when}</span>
+                <button
+                className="bg-blue-500 text-white px-4 py-2 rounded"
+                onClick={() => router.push(`/visits/${selectedCompany}/${visit.id}`)}
+              >
+                상세보기
+                </button>
                 <VisitListCard visit={visit} />
               </li>
             ))

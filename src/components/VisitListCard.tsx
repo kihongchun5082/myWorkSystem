@@ -2,12 +2,16 @@ import { Visit } from "@/model/visit";
 import { getSanityImageUrl } from "@/service/sanity";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
+import useSWR from "swr";
 
 type Props = {
  visit: Visit;
 }
 export default function VisitListCard( { visit }: Props) {
  const { visitName, when, companyName, nurse, numberConsults, docImage } = visit
+
+ console.log('docImage_VisitListCard: ',docImage)
 
  return <article className=" rounded-lg shadow-md border-gray-500 bg-blue-300">
   <div className=" flex items-center p-2 ">
@@ -24,6 +28,7 @@ export default function VisitListCard( { visit }: Props) {
   {docImage?.length > 0 && (
     <div className=" flex gap-2 m-2 overflow-auto bg-cyan-400 h-100 ml-2">
       {docImage?.map((image, index) => {
+        console.log('image_VisitListCard_docImage: ',image)
         const imageUrl = getSanityImageUrl(image) || undefined ;
         return (
           imageUrl && (
@@ -31,8 +36,13 @@ export default function VisitListCard( { visit }: Props) {
             <Image
               src = {imageUrl}
               alt={`${visitName} 사진`}
-              layout='fill'
-              objectFit="contain"
+              // layout='fill'
+              // objectFit="contain"
+              fill
+              sizes="(max-width: 768px) 100vw, 33vw"
+              style={{objectFit: "contain"}}
+              // width={500}
+              // height={500}
               className="rounded-md object-cover"
             />
           </Link>

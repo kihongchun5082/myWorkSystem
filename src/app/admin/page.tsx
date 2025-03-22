@@ -1,5 +1,4 @@
 import { SessionProvider } from "next-auth/react"
-import Dashboard from "./dashboard";
  
 type Props = {
  children: React.ReactNode;

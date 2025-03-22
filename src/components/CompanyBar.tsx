@@ -14,7 +14,7 @@ export default function CompanyBarPage() {
   const { selectedCompany, setSelectedCompany } = useCompany()
 
   const { data: companies, isLoading: loadingCompanies } = useSWR<Company[]>('/api/companies')
-  console.log('companies_CompactBar: ',companies)
+  console.log('companies_CompanyBar: ',companies)
 
   
 //  const { data, isLoading: loading, error } = useSWR<Company[]>('/api/companies')

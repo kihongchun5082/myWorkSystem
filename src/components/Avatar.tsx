@@ -14,7 +14,7 @@ export default function Avatar({
   
   const imageUrl = typeof image === "string" ? image : image && "asset" in image ? getSanityImageUrl(image) : undefined
 
-  console.log('imageUrl_Avatar',imageUrl)
+  // console.log('imageUrl_Avatar',imageUrl)
 
   return (
     <div className={getContainerStyle(size, highlight)}>
