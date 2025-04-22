@@ -1,23 +1,27 @@
 import { auth } from "@/auth";
-import { getVisits, getVisitsByCompany } from "@/service/sanity";
+import { getVisitsByCompany } from "@/service/sanity";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { companyName: string } }
+  { params }: { params: { company: string } }
 ) {
-  // console.log('req_visit[companyName]: ',req)
+  
   const session = await auth();
   const user = session?.user;
   if (!user) {
     return new Response("잘못된 사용자입니다.", { status: 401 });
   }
-  const { companyName } = await params;
-  console.log('companyName_visit[companyName]: ',companyName)
+  const { company } = await params;
+
+  // console.log('params_api?visits/[company]/route: ',params)
+  
+  console.log('company_api/visits/[company]/route: ',company)
 
   try {
-    const visits = await getVisitsByCompany(companyName);
-    console.log('visits_getVisitByCompany: ',visits)
+    const visits = await getVisitsByCompany(company);
+
+    console.log('visits_api/visits/[company]/route: ',visits)
 
     return NextResponse.json(visits);
   } catch (error) {

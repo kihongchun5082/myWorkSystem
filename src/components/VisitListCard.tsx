@@ -1,17 +1,18 @@
+import { useCompany } from "@/context/CompanyContext";
 import { Visit } from "@/model/visit";
 import { getSanityImageUrl } from "@/service/sanity";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import useSWR from "swr";
 
 type Props = {
  visit: Visit;
 }
 export default function VisitListCard( { visit }: Props) {
+
+ const { selectedCompany } = useCompany();  
  const { visitName, when, companyName, nurse, numberConsults, docImage } = visit
 
- console.log('docImage_VisitListCard: ',docImage)
+ console.log('visit_component/VisitListCard: ',visit)
 
  return <article className=" rounded-lg shadow-md border-gray-500 bg-blue-300">
   <div className=" flex items-center p-2 ">
@@ -28,11 +29,14 @@ export default function VisitListCard( { visit }: Props) {
   {docImage?.length > 0 && (
     <div className=" flex gap-2 m-2 overflow-auto bg-cyan-400 h-100 ml-2">
       {docImage?.map((image, index) => {
-        console.log('image_VisitListCard_docImage: ',image)
+
+        console.log('image_component/VisitListCard: ',image)
+
         const imageUrl = getSanityImageUrl(image) || undefined ;
+        
         return (
           imageUrl && (
-          <Link key={index} className="w-64 h-auto relative ml-2" href={`/visits/${companyName}/${visit.id}`}>
+          <Link key={index} className="w-64 h-auto relative ml-2" href={`/visits/${selectedCompany?._id}/${visit.id}`}>
             <Image
               src = {imageUrl}
               alt={`${visitName} 사진`}

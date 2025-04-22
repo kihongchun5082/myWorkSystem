@@ -1,16 +1,17 @@
 'use client'
+import { Company } from "@/model/company";
 import { createContext, ReactNode, useContext, useState } from "react";
 
 interface CompanyContextType {
- selectedCompany: string | null;
- setSelectedCompany: (company: string |null) => void
+ selectedCompany: Company | null;
+ setSelectedCompany: (company: Company |null) => void
 }
 
 const CompanyContext = createContext<CompanyContextType | undefined>(undefined)
 
 export function CompanyProvider({ children }: { children: ReactNode}) {
  
- const [selectedCompany, setSelectedCompany] = useState<string | null>(null) 
+ const [selectedCompany, setSelectedCompany] = useState<Company | null>(null) 
 
  return (
    <CompanyContext.Provider value={{ selectedCompany, setSelectedCompany }}>

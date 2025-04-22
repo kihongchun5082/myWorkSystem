@@ -14,14 +14,8 @@ export default function CompanyBarPage() {
   const { selectedCompany, setSelectedCompany } = useCompany()
 
   const { data: companies, isLoading: loadingCompanies } = useSWR<Company[]>('/api/companies')
-  console.log('companies_CompanyBar: ',companies)
 
-  
-//  const { data, isLoading: loading, error } = useSWR<Company[]>('/api/companies')
-//  console.log('data_CompanyBarPage_useSWR: ',data)
-//  const company = data
-//  console.log('company_CompanyBarPage_useSWR: ',company)
- // const company = data && [...data, ...data]
+  console.log('companies_components/companyBar: ',companies)
  
  return (
   <section className=" w-full flex justify-center items-center p-4 shadow-sm shadow-neutral-300 mb-4 rounded-lg min-h-[90px] overflow-x-auto">
@@ -31,7 +25,7 @@ export default function CompanyBarPage() {
     <ul className=" w-full flex gap-x-1.5">
       {/* <ScrollableBar> */}
       {companies?.map((c:Company) => (
-       <button key={c.companyName} className=" flex flex-col items-center w-20" onClick={()=>setSelectedCompany(c.companyName || null)}>
+       <button key={c._id} className=" flex flex-col items-center w-20" onClick={()=>setSelectedCompany(c|| null)}>
          <Avatar image={c.image} highlight />
          <p className=" w-full text-sm text-center text-ellipsis overflow-hidden ">{c.companyName}</p>
         </button>

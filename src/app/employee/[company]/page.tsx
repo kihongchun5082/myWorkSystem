@@ -1,0 +1,35 @@
+import { getConsultResultsByEmployeeByCompany } from "@/service/sanity";
+import NotFound from "./not-Found";
+import EmployeeConsultsProfile from "@/components/EmployeeConsultsProfile";
+
+type Props = {
+  params: Promise<{ company: string }>;
+  searchParams: Promise<{ [key: string]: string |  undefined }>;
+};
+
+export default async function EmployeeConsultsPage({
+  params,
+  searchParams,
+}: Props) {
+
+  const { company } = await params;
+  const employeeName = (await searchParams).name;
+  const birthYear = (await searchParams).birthYear;
+
+  console.log('searchParams', await searchParams);
+  console.log('employeeName: ', employeeName);
+  console.log('birthYear: ', birthYear);
+
+  if (!company || !employeeName || !birthYear) {
+    return <NotFound />;
+  }
+
+  const consultResults = await getConsultResultsByEmployeeByCompany(
+    company,
+    employeeName,
+    birthYear
+  );
+  console.log('consultResults_employee/[company]/page: ',consultResults)
+
+  return <EmployeeConsultsProfile consultResults={consultResults} />;
+}

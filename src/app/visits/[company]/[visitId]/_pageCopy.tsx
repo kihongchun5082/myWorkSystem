@@ -52,7 +52,7 @@ export default function VisitDetailPage() {
         </div>
 
         {/* Consultation Form */}
-        {selectedImage && <ConsultForm visitId={visit.id} />}
+        {/* {selectedImage && <ConsultForm visitId={visit.id} />} */}
       </div>
     </div>
   );
