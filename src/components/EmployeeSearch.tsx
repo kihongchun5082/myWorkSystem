@@ -9,7 +9,6 @@ import EmployeeCardPage from "./EmployeeCard";
 
 export default function EmployeeSearchPage() {
   const { selectedCompany } = useCompany();
-
   const [employeeName, setEmployeeName] = useState("");
   // const debouncedEmployName = useDebounce(employeeName);
   const [birthYear, setBirYear] = useState("");

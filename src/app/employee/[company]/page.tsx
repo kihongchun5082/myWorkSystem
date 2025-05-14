@@ -1,4 +1,4 @@
-import { getConsultResultsByEmployeeByCompany } from "@/service/sanity";
+import { getConsultResultsByEmployeeByCompany, getEmployeeByCompany, getVisitByCompanyNameByVisitId } from "@/service/sanity";
 import NotFound from "./not-Found";
 import EmployeeConsultsProfile from "@/components/EmployeeConsultsProfile";
 
@@ -16,6 +16,7 @@ export default async function EmployeeConsultsPage({
   const employeeName = (await searchParams).name;
   const birthYear = (await searchParams).birthYear;
 
+  console.log('company_EmployeeConsultsPage-params: ', company);
   console.log('searchParams', await searchParams);
   console.log('employeeName: ', employeeName);
   console.log('birthYear: ', birthYear);
@@ -24,6 +25,10 @@ export default async function EmployeeConsultsPage({
     return <NotFound />;
   }
 
+  const employee = await getEmployeeByCompany(company, employeeName, birthYear);
+
+  console.log('employee_employee/[company]/page: ',employee)
+
   const consultResults = await getConsultResultsByEmployeeByCompany(
     company,
     employeeName,
@@ -31,5 +36,5 @@ export default async function EmployeeConsultsPage({
   );
   console.log('consultResults_employee/[company]/page: ',consultResults)
 
-  return <EmployeeConsultsProfile consultResults={consultResults} />;
+  return <EmployeeConsultsProfile consultResults={consultResults} employee={employee} />;
 }

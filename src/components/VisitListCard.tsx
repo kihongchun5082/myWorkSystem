@@ -9,12 +9,12 @@ type Props = {
 }
 export default function VisitListCard( { visit }: Props) {
 
- const { selectedCompany } = useCompany();  
- const { visitName, when, companyName, nurse, numberConsults, docImage } = visit
+//  const { selectedCompany } = useCompany();  
+ const { visitName, nurse, numberConsults, docImage } = visit
 
  console.log('visit_component/VisitListCard: ',visit)
 
- return <article className=" rounded-lg shadow-md border-gray-500 bg-blue-300">
+ return <article className=" rounded-lg shadow-md border-gray-500 ">
   <div className=" flex items-center p-2 ">
     <div className=" ml-3">
       <strong>{visitName}</strong> 
@@ -27,7 +27,7 @@ export default function VisitListCard( { visit }: Props) {
     </div>
   </div>
   {docImage?.length > 0 && (
-    <div className=" flex gap-2 m-2 overflow-auto bg-cyan-400 h-100 ml-2">
+    <div className=" flex gap-2 m-2 overflow-auto  h-100 ml-2">
       {docImage?.map((image, index) => {
 
         console.log('image_component/VisitListCard: ',image)
@@ -36,7 +36,7 @@ export default function VisitListCard( { visit }: Props) {
         
         return (
           imageUrl && (
-          <Link key={index} className="w-64 h-auto relative ml-2" href={`/visits/${selectedCompany?._id}/${visit.id}`}>
+          <Link key={index} className="w-64 h-auto relative ml-2" href={`/visits/${visit.id}`}>
             <Image
               src = {imageUrl}
               alt={`${visitName} 사진`}
@@ -50,9 +50,7 @@ export default function VisitListCard( { visit }: Props) {
               className="rounded-md object-cover"
             />
           </Link>
-          )
-        );
-      })}
+          ))})}
     </div>
   )}
  </article>

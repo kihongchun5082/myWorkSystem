@@ -1,5 +1,6 @@
 "use client";
 import ConsultForm from "@/components/ConsultForm";
+import { useCompany } from "@/context/CompanyContext";
 import { getSanityImageUrl } from "@/service/sanity";
 import Image from "next/image";
 import { useParams } from "next/navigation";
@@ -7,22 +8,17 @@ import { useState } from "react";
 import useSWR from "swr";
 
 export default function VisitDetailPage() {
-
-  const { company, visitId } = useParams<{
-    company: string;
-    visitId: string;
-  }>();
+  const { selectedCompany } = useCompany();
+  const { visitId } = useParams<{visitId: string;}>();
 
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
-
-  console.log('company_visits/[company]/[visitId]/page: ',company)
 
   const {
     data: visit,
     isLoading,
     error,
-  } = useSWR(`/api/visits/${company}/${visitId}`);
+  } = useSWR(`/api/visits/${visitId}`);
 
   console.log("visit_app/visits/[company]/[visitId]/page: ", visit);
 
@@ -58,7 +54,7 @@ export default function VisitDetailPage() {
          {visit?.docImage?.length ? (
           visit.docImage.map((image: any, index: number) => {
             const imageUrl = getSanityImageUrl(image);
-            // const isChoosenY = image?.isChoosen ?? false;
+            const isChoosenY = image?.isChoosen ?? false;
             return (
               <div
                 key={index}
@@ -83,9 +79,9 @@ export default function VisitDetailPage() {
                     />
                   )}
                 </div>
-                {/* <span className=" text-xs mt-1 text-gray-600">
+                <span className=" text-xs mt-1 text-gray-600">
                   {isChoosenY ? "보았음" : "본적없음"}
-                </span> */}
+                </span> 
               </div>
             );
           })
@@ -95,11 +91,11 @@ export default function VisitDetailPage() {
         </div>
 
         {/* Consultation Form */}
-        {selectedImage 
+        {selectedCompany && selectedImage 
         // && setSelectedImageIndex !== null 
         && (
           <ConsultForm
-           visitId={ visit.id } company={ company } visitDate={ visit.when }
+           visitId={ visit.id } company={ selectedCompany.companyId} visitDate={ visit.when }
           //  imageIndex={selectedImageIndex}
             />
         )}

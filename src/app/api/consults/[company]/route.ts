@@ -18,7 +18,9 @@ export async function POST(req: NextRequest, { params }: {params: {company: stri
    const newConsult = await saveConsult(body);
    return NextResponse.json(newConsult);
  } catch (error) {
+
    console.error("Error fetching visits:", error);
+   
    return new Response("서버 오류 발생", { status: 500 });
   }
  }

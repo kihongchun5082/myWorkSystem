@@ -10,6 +10,7 @@ import NewFillIcon from "./ui/icons/NewFillIcon";
 import ColoredButton from "./ui/ColoredButton";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Avatar from "./Avatar";
+import CompanyIcon from "./ui/icons/CompanyIcon";
 const menu = [
   {
     href: "/",
@@ -25,6 +26,11 @@ const menu = [
     href: "/new",
     icon: <NewIcon />,
     clickedIcon: <NewFillIcon />,
+  },
+  {
+    href: "/company",
+    icon: <CompanyIcon />,
+    clickedIcon: <CompanyIcon />,
   },
 ];
   export default function Navbar() {

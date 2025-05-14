@@ -22,14 +22,18 @@ export async function GET(
   //   if (!birthYear || !employeeName ) {
   //    return new Response("birthYear employeeName 쿼리 파라미터 필요", { status: 400 });
   //  }
+  
   try {
     let employees;
     if (employeeName && birthYear) {
       employees = await getEmployeeByCompany(company, employeeName, birthYear);
-      console.log('employees_api/employee/[company]/route-if-getEmployeeByCompany: ',employees)
+
+      console.log('employees_api/employee/[company]/route-searchParams-getEmployeeByCompany: ',employees)
+
     } else {
       employees = await getEmployeesByCompany(company);
-      console.log('employees_api/employee/[company]/route-else-getEmployeesByCompany: ',employees)
+
+      console.log('employees_api/employee/[company]/route--getEmployeesByCompany: ',employees)
     }
 
     // console.log(

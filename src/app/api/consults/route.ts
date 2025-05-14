@@ -9,16 +9,15 @@ export async function POST(req: NextRequest) {
   }
   try {
     const existingConsult = await getConsultByCompanyByEmployeeByVisit(whichCompany, employeeName, birthYear, visitId);
-
     if (existingConsult) {
       return new Response("이미 등록된 상담입니다.", { status: 400 })
     }
-
     const newConsult = await saveConsult(body)
-
     return NextResponse.json(newConsult);
   } catch (error) {
+
     console.error('Error creating consult: ', error)
+    
     return new Response("Error saving consult", { status: 500 });
   }
 }

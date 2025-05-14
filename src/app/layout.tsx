@@ -6,6 +6,7 @@ import { auth } from "@/auth";
 import Administrator from "./admin/page";
 import SWRConfigContext from "@/context/SWRConfigContext";
 import { CompanyProvider } from "@/context/CompanyContext";
+import Script from "next/script";
 
 const openSans = Open_Sans({
   subsets: ["latin"],
@@ -31,7 +32,13 @@ export default function RootLayout({
 }: Props) {
   return (
     <html lang="en" className={openSans.className}>
-      <body className=" w-full max-w-screen-xl  overflow-auto mx-auto bg-red-200">
+      {/* <head>
+      <Script
+        src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
+        strategy="lazyOnload"
+      />
+      </head> */}
+      <body className=" w-full max-w-screen-xl  overflow-auto mx-auto">
         <Administrator>
           <header className="sticky top-0 bg-white z-10 border-b">
             <Navbar />

@@ -25,7 +25,9 @@ export async function GET(req: NextRequest, { params }: { params: { company: str
 
    return NextResponse.json(consult);
  } catch (error) {
+
    console.error("Error fetching visits:", error);
+   
    return new Response("서버 오류 발생", { status: 500 });
  }
  }

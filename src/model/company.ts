@@ -1,7 +1,12 @@
 export type Company = {
  _id: string;
- companyName?: string | null;
- companyId?: string | null;
- // image?: string | null;
- image?: string | { asset: { _ref: string }} | null;
+ companyName: string;
+ companyId: string;
+ address: string;
+ zipCode: string;
+ telNumber: string;
+ numEmployees: string;
+ managerName: string;
+ isContract: boolean;
+ image: string | { asset: { _ref: string }} | null;
 }

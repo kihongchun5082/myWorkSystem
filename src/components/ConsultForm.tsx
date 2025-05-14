@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Company } from "@/model/company";
 
 export default function ConsultForm({
   visitId,
@@ -11,6 +12,7 @@ export default function ConsultForm({
   company: string;
   visitDate: string;
 }) {
+
   console.log("seletedCompany_conponent/ConsultForm: ", company);
   console.log("visitId_conponent/ConsultForm: ", visitId);
   console.log("visitDate_conponent/ConsultForm: ", visitDate);
@@ -42,6 +44,7 @@ export default function ConsultForm({
       const existingConsult = await res.json();
       // if (res.ok) {
       // const existingConsult = await res.json();
+      
       console.log("existingConsult_component/ConsultForm: ", existingConsult);
 
       if (existingConsult) {

@@ -16,10 +16,14 @@ export async function PATCH(
         [`visitPhoto[${index}].isChoosen`]: true,
       })
       .commit();
+
       console.log('patchResult_api/visits/[company]/[visitId]/mark-image/route/PATCH: ',patchResult)
+
     return NextResponse.json(patchResult);
   } catch (error) {
+
     console.error("Error marking image as consulted: ", error);
+    
     return new Response("Failed to mark image", { status: 500 });
   }
 }

@@ -31,7 +31,7 @@ export async function addUser({
 
 export async function getCompanies() {
   return sanityClient.fetch(
-    '*[_type == "company"] | order(companyName) {_id, companyName, companyId, image}'
+    '*[_type == "company"] | order(companyName) {_id, companyName, address, zipCode, telNumber, numEmployees, managerName, isContract, companyId, image}'
   );
 }
 
@@ -46,7 +46,7 @@ export async function getVisits() {
 
 export const getSanityImageUrl = (image: { asset?: { _ref?: string } }) => {
   if (!image || !image.asset || typeof image.asset._ref !== "string") {
-    console.error("Invalid Sanity image object:", image);
+    console.error("Invalid Sanity image object ⚠️ image 필드가 잘못된 형식입니다: ", image);
     return undefined;
   }
 
@@ -80,6 +80,7 @@ export async function getVisitsByCompany(company: string) {
   );
 }
 
+/* 
 export async function getVisitByCompanyNameByVisitId(
   company: string,
   visitId: string
@@ -97,30 +98,23 @@ export async function getVisitByCompanyNameByVisitId(
     }`
     // { company, visitId }
   );
-  // console.log("🔍 Visit returned from Sanity: ", visit);
   // return visit;
-}
+} */
 
-// export async function getDocImageByVisitByCompanyName(companyName: string, slug: string) {
-//  return sanityClient.fetch(
-//   `*[_type == "visit" && visitCompany->companyName == $companyName && _id == $slug] {
-//   "images": docImage[].asset->_ref}`,
-//   { companyName, slug }
-//  )
-// }
+// service/sanity.ts
 
-export async function getConsultsByCompanyByEmployee(
-  company: string,
-  employee: string,
-  birthYear: string
-) {
+export async function getVisitByVisitId(visitId: string) {
   return sanityClient.fetch(
-    `*[_type == "consult" && whichCompany -> _id == "${company}" && employeeName=="${employee}" && birthYear=="${birthYear}"]  {
-    "id": _id,
-    "name": employeeName,
-    "birthYear": birthYear,
-    "sex": gender
-    }`
+    `*[_type == "visit" && _id == $visitId][0] {
+      "id": _id,
+      visitName,
+      "companyName": visitCompany->companyName,
+      "when": visitedAt,
+      "nurse": nurseName,
+      "numberConsults": numCnslts,
+      "docImage": visitPhoto
+    }`,
+    { visitId }
   );
 }
 
@@ -162,8 +156,9 @@ export async function getConsultsBycompanyName(company: string) {
 }
 
 export async function getEmployeesByCompany(company: string) {
-  return sanityClient.fetch(
-    `*[_type == "consult" && whichCompany -> _id == "${company}"]  | order(employeeName)  {
+  const results = await sanityClient.fetch(
+    `*[_type == "consult" && whichCompany -> _id == "${company}"]  | order(employeeName asc, _createdAt asc)  {
+    "key": employeeName + birthYear,
     "id": _id,
     "companyName": whichCompany -> companyName,
     "company": whichCompany -> _id,
@@ -172,6 +167,16 @@ export async function getEmployeesByCompany(company: string) {
     "sex": gender
     }`
   );
+  // JavaScript로 중복 제거
+  const seen = new Set();
+  const uniqueEmployees = results.filter((item: any) => {
+    const key = item.name + item.birthYear;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+
+  return uniqueEmployees;
 }
 
 export async function getEmployeeByCompany(
@@ -180,7 +185,7 @@ export async function getEmployeeByCompany(
   birthYear: string
 ) {
   return sanityClient.fetch(
-    `*[_type == "consult" && whichCompany -> _id == $company && employeeName == $employeeName && birthYear == $birthYear] {
+    `*[_type == "consult" && whichCompany -> _id == $company && employeeName == $employeeName && birthYear == $birthYear][0] {
     "id": _id,
     "companyName": whichCompany -> companyName,
     "company": whichCompany -> _id,
@@ -209,6 +214,14 @@ export async function getConsultResultsByEmployeeByCompany(
       "company": whichCompany -> _id,
       "companyName": whichCompany -> companyName,
       "visitId": visitId,
+
+      "visitInfo": *[_type == "visit" && _id == ^.visitId][0] {
+        visitName,
+        visitedAt,
+        nurseName,
+        numCnslts,
+        visitPhoto
+      },
       "bp": bp,
       "bpAtScreen": bpAtScreen,
       "fbsAtScreen": fbsAtScreen,
@@ -238,4 +251,18 @@ export async function getConsultResultsByEmployeeByCompany(
       birthYear
     }
   );
+}
+
+// lib/sanityImage.ts
+import imageUrlBuilder from "@sanity/image-url";
+
+const builder = imageUrlBuilder(sanityClient);
+
+export function urlFor(source: any) {
+  if (!source || !source.asset || !source.asset._ref) {
+    console.warn("⚠️ image 필드가 잘못된 형식입니다:", source);
+    return null;
+  }
+
+  return builder.image(source);
 }
