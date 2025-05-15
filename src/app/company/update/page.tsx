@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Script from "next/script";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -17,10 +17,10 @@ export default function CompanyUpdatePage() {
     form,
     logo,
     setForm,
-    setLogo,
+    // setLogo,
     handleChange,
     handleFileChange,
-    resetForm
+    // resetForm
   } = useCompanyForm();
 
   useEffect(() => {

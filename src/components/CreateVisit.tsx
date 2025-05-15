@@ -140,7 +140,7 @@ export default function NewVisit() {
     <section className=" w-full max-xl: flex flex-col items-center mt-6">
       <CompanyBarPage />
       <h2 className="text-lg font-bold">
-        "{selectedCompany?.companyName}" 방문 입력
+        {selectedCompany?.companyName} 방문 입력
       </h2>
       <form className=" w-full flex flex-col mt-2">
         {/* <div className=" outline-none text-lg border border-neutral-300"> */}

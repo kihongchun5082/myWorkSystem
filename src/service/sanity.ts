@@ -56,10 +56,10 @@ export const getSanityImageUrl = (image: { asset?: { _ref?: string } }) => {
     .replace("image-", "")
     .replace("-png", ".png")
     .replace("-jpg", ".jpg");
-  const paramsStart = "?";
-  const addParams = "&";
-  const shape = "rect=70,20,120,150";
-  const size = "h=500";
+  // const paramsStart = "?";
+  // const addParams = "&";
+  // const shape = "rect=70,20,120,150";
+  // const size = "h=500";
 
   // return `${baseUrl}/${ref}${paramsStart}${size}`
   return `${baseUrl}/${ref}`;
@@ -152,7 +152,6 @@ export async function getEmployeesByCompany(company: string) {
     seen.add(key);
     return true;
   });
-
   return uniqueEmployees;
 }
 

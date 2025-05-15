@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "../studio-visiting-sanity/middleware.ts", "../studio-visiting-sanity/admin/auth.ts", "../studio-visiting-sanity/Sign-in.tsx", "../studio-visiting-sanity/UserAvatar.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "../studio-visiting-sanity/middleware.ts", "../studio-visiting-sanity/admin/auth.ts", "../studio-visiting-sanity/Sign-in.tsx", "../studio-visiting-sanity/UserAvatar.tsx", "../miscellRepository/companyLogo/page_customHookx.tsx", "../miscellRepository/page_customHookx.tsx", "../miscellRepository/CompanyBar copy.tsx", "../miscellRepository/ScrollableBar.tsx", "../miscellRepository/fix-short-id-execButton.tsx", "../miscellRepository/page copy.tsx", "../miscellRepository/layout copy.tsx", "../miscellRepository/_pageCopy.tsx"],
   "exclude": ["node_modules"]
 }

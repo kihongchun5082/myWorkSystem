@@ -12,7 +12,7 @@ export default function VisitDetailPage() {
   const { visitId } = useParams<{visitId: string;}>();
 
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
+  // const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
 
   const {
     data: visit,
@@ -64,7 +64,7 @@ export default function VisitDetailPage() {
                   onClick={() => {
                     // if (!isChoosenY) {
                       setSelectedImage(imageUrl ?? null);
-                      setSelectedImageIndex(index);
+                      // setSelectedImageIndex(index);
                     // }
                   }}
                 >

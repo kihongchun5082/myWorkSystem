@@ -2,11 +2,9 @@ import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-import { auth } from "@/auth";
 import Administrator from "./admin/page";
 import SWRConfigContext from "@/context/SWRConfigContext";
 import { CompanyProvider } from "@/context/CompanyContext";
-import Script from "next/script";
 
 const openSans = Open_Sans({
   subsets: ["latin"],
