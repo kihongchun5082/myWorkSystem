@@ -95,7 +95,7 @@ export default function VisitDetailPage() {
         // && setSelectedImageIndex !== null 
         && (
           <ConsultForm
-           visitId={ visit.id } company={ selectedCompany.companyId} visitDate={ visit.when }
+           visitId={ visit.id } company={ selectedCompany._id} visitDate={ visit.when }
           //  imageIndex={selectedImageIndex}
             />
         )}

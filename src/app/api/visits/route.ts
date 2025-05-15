@@ -13,15 +13,16 @@ export async function GET(req: NextRequest) {
   }
 
   const { searchParams } = new URL(req.url);
-  const companyId = searchParams.get("company");
-  console.log('companyId:',companyId)
+  const company_Id = searchParams.get("company");
+  
+  console.log('company_Id:',company_Id)
 
-  if (!companyId) {
+  if (!company_Id) {
     return new Response("Missing 'company' query parameter", { status: 400 });
   }
 
   try {
-    const visits = await getVisitsByCompany(companyId);
+    const visits = await getVisitsByCompany(company_Id);
     return NextResponse.json(visits);
   } catch (error) {
     console.error("Error fetching visits:", error);

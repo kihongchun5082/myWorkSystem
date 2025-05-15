@@ -1,6 +1,5 @@
 // app/company/page.tsx
 "use client";
-import { useEffect, useRef, useState } from "react";
 import CompanyBarPage from "@/components/CompanyBar";
 import CompanyCreatePage from "./new/page";
 import { useCompany } from "@/context/CompanyContext";

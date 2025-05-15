@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Company } from "@/model/company";
 
 export default function ConsultForm({
   visitId,
@@ -278,7 +277,7 @@ export default function ConsultForm({
                 {/* <label htmlFor="age">나이</label> */}
                 <input
                   type="text"
-                  id="age"
+                  // id="age"
                   name="age"
                   placeholder="나이"
                   size={10}
@@ -291,7 +290,7 @@ export default function ConsultForm({
               {/* <label htmlFor="bp">혈압</label> */}
               <input
                 type="text"
-                id="bp"
+                // id="bp"
                 name="bp"
                 placeholder="혈압"
                 size={10}
@@ -301,7 +300,7 @@ export default function ConsultForm({
               {/* <label htmlFor="employeeName">검진 시 혈압</label> */}
               <input
                 type="text"
-                id="bpAtScreen"
+                // id="bpAtScreen"
                 name="bpAtScreen"
                 placeholder="검진시혈압"
                 size={10}
@@ -313,7 +312,7 @@ export default function ConsultForm({
               {/* <label htmlFor="employeeName">공복혈당</label> */}
               <input
                 type="text"
-                id="fbsAtScreen"
+                // id="fbsAtScreen"
                 name="fbsAtScreen"
                 placeholder="공복혈당"
                 size={10}
@@ -323,7 +322,7 @@ export default function ConsultForm({
               {/* <label htmlFor="employeeName">당화혈색소</label> */}
               <input
                 type="text"
-                id="hbA1C"
+                // id="hbA1C"
                 name="hbA1C"
                 placeholder="당화혈색소"
                 size={10}
@@ -333,7 +332,7 @@ export default function ConsultForm({
               {/* <label htmlFor="employeeName">식후2시간혈당</label> */}
               <input
                 type="text"
-                id="PP2hrBS"
+                // id="PP2hrBS"
                 name="pp2hrBs"
                 placeholder="식후2시간혈당"
                 size={10}
@@ -353,7 +352,7 @@ export default function ConsultForm({
                 <div>
                   <input
                     type="checkbox"
-                    id="isHtMed"
+                    // id="isHtMed"
                     name="isHtMed"
                     checked={formData.isHtMed || ""}
                     onChange={handleChange}
@@ -363,7 +362,7 @@ export default function ConsultForm({
                 <div>
                   <input
                     type="checkbox"
-                    id="isDmMed"
+                    // id="isDmMed"
                     name="isDmMed"
                     checked={formData.isDmMed || ""}
                     onChange={handleChange}
@@ -373,7 +372,7 @@ export default function ConsultForm({
                 <div>
                   <input
                     type="checkbox"
-                    id="isCholMed"
+                    // id="isCholMed"
                     name="isCholMed"
                     checked={formData.isCholMed || ""}
                     onChange={handleChange}
@@ -388,7 +387,7 @@ export default function ConsultForm({
                 <div>
                   <input
                     type="checkbox"
-                    id="isHtFamHx"
+                    // id="isHtFamHx"
                     name="isHtFamHx"
                     checked={formData.isHtFamHx || ""}
                     onChange={handleChange}
@@ -398,7 +397,7 @@ export default function ConsultForm({
                 <div>
                   <input
                     type="checkbox"
-                    id="isDmFamHx"
+                    // id="isDmFamHx"
                     name="isDmFamHx"
                     checked={formData.isDmFamHx || ""}
                     onChange={handleChange}
@@ -408,7 +407,7 @@ export default function ConsultForm({
                 <div>
                   <input
                     type="checkbox"
-                    id="isCholFamHx"
+                    // id="isCholFamHx"
                     name="isCholFamHx"
                     checked={formData.isCholFamHx || ""}
                     onChange={handleChange}
@@ -421,7 +420,7 @@ export default function ConsultForm({
               {/* <label htmlFor="WC">허리둘레</label> */}
               <input
                 type="text"
-                id="WC"
+                // id="WC"
                 name="wc"
                 placeholder="허리둘레(cm)"
                 size={10}
@@ -431,7 +430,7 @@ export default function ConsultForm({
               {/* <label htmlFor="employeeName">키</label> */}
               <input
                 type="text"
-                id="height"
+                // id="height"
                 name="height"
                 placeholder="키(cm)"
                 size={10}
@@ -441,7 +440,7 @@ export default function ConsultForm({
               {/* <label htmlFor="employeeName">몸무게</label> */}
               <input
                 type="text"
-                id="weight"
+                // id="weight"
                 name="weight"
                 placeholder="몸무게(kg)"
                 size={10}
@@ -451,7 +450,7 @@ export default function ConsultForm({
               {/* <label htmlFor="employeeName">체질량지수</label> */}
               <input
                 type="text"
-                id="BMI"
+                // id="BMI"
                 name="bmi"
                 placeholder="체질량지수"
                 size={10}
@@ -462,7 +461,7 @@ export default function ConsultForm({
             <fieldset className="flex flex-col justify-between md:flex-row">
               <input
                 type="text"
-                id="Hb"
+                // id="Hb"
                 name="hb"
                 placeholder="혈색소"
                 size={6}
@@ -472,7 +471,7 @@ export default function ConsultForm({
               {/* <label htmlFor="employeeName">간기능패널</label> */}
               <input
                 type="text"
-                id="LFT"
+                // id="LFT"
                 name="lft"
                 placeholder="간기능패널"
                 size={12}
@@ -482,7 +481,7 @@ export default function ConsultForm({
               {/* <label htmlFor="employeeName">지방패널</label> */}
               <input
                 type="text"
-                id="lipidPanel"
+                // id="lipidPanel"
                 name="lipidPanel"
                 placeholder="지방패널"
                 size={15}
@@ -492,7 +491,7 @@ export default function ConsultForm({
               {/* <label htmlFor="employeeName">단백뇨</label> */}
               <input
                 type="text"
-                id="urineProtein"
+                // id="urineProtein"
                 name="urineProtein"
                 placeholder="단백뇨(+)"
                 size={6}
@@ -504,7 +503,7 @@ export default function ConsultForm({
               {/* <label htmlFor="employeeName">흡연</label> */}
               <input
                 type="text"
-                id="smoking"
+                // id="smoking"
                 name="smoking"
                 placeholder="흡연(개피)"
                 size={10}
@@ -514,7 +513,7 @@ export default function ConsultForm({
               {/* <label htmlFor="employeeName">음주</label> */}
               <input
                 type="text"
-                id="drinking"
+                // id="drinking"
                 name="drinking"
                 placeholder="음주(병/주)"
                 size={10}
@@ -524,7 +523,7 @@ export default function ConsultForm({
               {/* <label htmlFor="employeeName">운동</label> */}
               <input
                 type="text"
-                id="exercise"
+                // id="exercise"
                 name="exercise"
                 placeholder="운동(회/주)"
                 size={10}
@@ -533,7 +532,7 @@ export default function ConsultForm({
               />
               {/* <label htmlFor="employeeName">상담 내용</label> */}
               <textarea
-                id="comments"
+                // id="comments"
                 name="comments"
                 placeholder="상담 내용"
                 value={formData.comments || ""}

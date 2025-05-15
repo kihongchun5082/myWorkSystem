@@ -78,10 +78,12 @@ export default function useCompanyForm(selectedCompany?: Company) {
 
   const searchAddress = () => {
     if (typeof window !== "undefined" && (window as any).daum?.Postcode) {
+
       console.log(
         "(window as any).daum?.Postcode: ",
         (window as any).daum?.Postcode
       );
+
       new (window as any).daum.Postcode({
         oncomplete: function (data: any) {
           setForm((prev) => ({
@@ -92,10 +94,12 @@ export default function useCompanyForm(selectedCompany?: Company) {
         },
       }).open();
     } else {
+
       console.log(
         "(window as any).daum?.Postcode: ",
         (window as any).daum?.Postcode
       );
+      
       alert("주소 검색 스크립트가 아직 로드되지 않았습니다.");
     }
   };

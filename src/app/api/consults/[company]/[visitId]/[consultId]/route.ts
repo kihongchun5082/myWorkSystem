@@ -1,6 +1,5 @@
 import sanityClient from '@/lib/sanityClient';
 import { NextRequest, NextResponse } from 'next/server';
-import React from 'react';
 
 export async function PATCH(req: NextRequest, { params }: { params: { consultId: string }}) {
 

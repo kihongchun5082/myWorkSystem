@@ -1,4 +1,4 @@
-import { getConsultResultsByEmployeeByCompany, getEmployeeByCompany, getVisitByCompanyNameByVisitId } from "@/service/sanity";
+import { getConsultResultsByEmployeeByCompany, getEmployeeByCompany } from "@/service/sanity";
 import NotFound from "./not-Found";
 import EmployeeConsultsProfile from "@/components/EmployeeConsultsProfile";
 

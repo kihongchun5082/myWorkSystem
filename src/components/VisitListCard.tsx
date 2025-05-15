@@ -1,4 +1,3 @@
-import { useCompany } from "@/context/CompanyContext";
 import { Visit } from "@/model/visit";
 import { getSanityImageUrl } from "@/service/sanity";
 import Image from "next/image";

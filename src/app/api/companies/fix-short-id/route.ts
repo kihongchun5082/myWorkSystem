@@ -1,4 +1,4 @@
-// app/api/companies/fix-short-id/route.ts
+// app/api/companies/fix-short-id/route.ts Homepage에 <FixShortIdexecButton />버튼으로 접근
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
 import sanityClient from "@/lib/sanityClient";
@@ -33,6 +33,26 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ count: shortIdCompanies.length });
   } catch (err) {
     console.error("회사 id 정리 중 오류:", err);
+    return new Response("서버 오류", { status: 500 });
+  }
+}
+
+export async function GET(req: NextRequest) {
+  const session = await auth();
+  const user = session?.user;
+  if (!user) return new Response("Unauthorized", { status: 401 });
+
+  try {
+    const consults = await sanityClient.fetch(`*[_type == "consult"]`);
+
+    const shortIdCompanies = consults.filter((c: any) => c._id.length <= 3);
+
+    console.log("총 상담 내역: ", consults);
+    console.log("총 shortId 상담 수: ", shortIdCompanies.length);
+
+    return NextResponse.json(consults);
+  } catch (err) {
+    console.error("상담 찾는 중 오류:", err);
     return new Response("서버 오류", { status: 500 });
   }
 }

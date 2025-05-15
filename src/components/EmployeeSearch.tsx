@@ -4,15 +4,12 @@ import { useCompany } from "@/context/CompanyContext";
 import { useState } from "react";
 import useSWR from "swr";
 import CompanyBarPage from "./CompanyBar";
-import useDebounce from "@/hooks/useDebounce";
 import EmployeeCardPage from "./EmployeeCard";
 
 export default function EmployeeSearchPage() {
   const { selectedCompany } = useCompany();
   const [employeeName, setEmployeeName] = useState("");
-  // const debouncedEmployName = useDebounce(employeeName);
   const [birthYear, setBirYear] = useState("");
-  // const debouncedBirthYear = useDebounce(birthYear);
   const [searchTrigger, setSearchTrigger] = useState(false);
   const shouldFetch = selectedCompany && searchTrigger;
   const query = selectedCompany

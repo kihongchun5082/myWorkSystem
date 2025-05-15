@@ -1,7 +1,6 @@
 "use client";
 import { useCompany } from "@/context/CompanyContext";
 import { Visit } from "@/model/visit";
-import { getSanityImageUrl } from "@/service/sanity";
 import { PropagateLoader } from "react-spinners";
 import useSWR from "swr";
 import VisitListCard from "./VisitListCard";

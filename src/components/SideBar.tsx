@@ -1,6 +1,5 @@
 import { User } from "@/model/user";
 import Avatar from "./Avatar";
-import { SiZebpay } from "react-icons/si";
 
 type userType = {
  user: User;

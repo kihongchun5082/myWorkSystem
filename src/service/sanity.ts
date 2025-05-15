@@ -80,29 +80,6 @@ export async function getVisitsByCompany(company: string) {
   );
 }
 
-/* 
-export async function getVisitByCompanyNameByVisitId(
-  company: string,
-  visitId: string
-) {
-  // const visit = await sanityClient.fetch(
-  return sanityClient.fetch(
-    `*[_type == "visit" && visitCompany->_id == "${company}" && _id == "${visitId}"][0] {
-    "id": _id,
-    visitName,
-    "companyName": visitCompany->companyName,
-    "when": visitedAt,
-    "nurse": nurseName,
-    "numberConsults": numCnslts,
-    "docImage": visitPhoto
-    }`
-    // { company, visitId }
-  );
-  // return visit;
-} */
-
-// service/sanity.ts
-
 export async function getVisitByVisitId(visitId: string) {
   return sanityClient.fetch(
     `*[_type == "visit" && _id == $visitId][0] {

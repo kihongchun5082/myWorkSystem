@@ -1,8 +1,13 @@
 "use client";
+import Link from "next/link";
 import useSWR from "swr";
 import Avatar from "./Avatar";
 import { Company } from "@/model/company";
 import { PropagateLoader } from "react-spinners";
+import ScrollableBar from "./ui/icons/ScrollableBar";
+import { createContext, ReactNode, useState } from "react";
+import { Visit } from "@/model/visit";
+import VisitListPage from "./VisitList";
 import { useCompany } from "@/context/CompanyContext";
 
 export default function CompanyBarPage() {

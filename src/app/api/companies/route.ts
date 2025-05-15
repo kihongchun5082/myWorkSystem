@@ -4,7 +4,9 @@ import { getCompanies } from "@/service/sanity";
 
 export async function GET() {
   const session = await auth();
+
   // console.log("session_api/companies/route: ", session);
+  
   const user = session?.user;
 
   if (!user) {

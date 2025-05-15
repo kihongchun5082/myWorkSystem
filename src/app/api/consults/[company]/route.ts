@@ -1,4 +1,4 @@
-import { getConsultsBycompanyName, saveConsult } from "@/service/sanity";
+import { saveConsult } from "@/service/sanity";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest, { params }: {params: {company: string}}) {

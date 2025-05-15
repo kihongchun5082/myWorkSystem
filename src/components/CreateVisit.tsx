@@ -4,9 +4,7 @@ import { useCompany } from "@/context/CompanyContext";
 import { useState, useRef, ChangeEvent, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import CompanyBarPage from "./CompanyBar";
-import { Company } from "@/model/company";
 import FilesIcon from "./ui/icons/FilesIcon";
-import Button from "./ui/Button";
 import Image from "next/image";
 
 export default function NewVisit() {

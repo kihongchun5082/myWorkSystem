@@ -1,6 +1,5 @@
 // File: /app/api/visits/new/route.ts
-export const runtime = "nodejs";
-
+// export const runtime = "nodejs";
 import { auth } from "@/auth";
 import { NextRequest, NextResponse } from "next/server";
 import { v4 as uuidv4 } from "uuid";
