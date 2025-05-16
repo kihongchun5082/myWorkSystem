@@ -4,6 +4,7 @@ import { Employee, ConsultResults } from "@/model/employee";
 import { Visit } from "@/model/visit";
 
 import imageUrlBuilder from "@sanity/image-url";
+import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 
 type OAuthUser = {
   id: string;
@@ -24,7 +25,8 @@ export async function addUser(
   // createdAt,
   // }
   // : OAuthUser) {
-  user: OAuthUser) {
+  user: OAuthUser
+) {
   return sanityClient.createIfNotExists({
     _id: user.username,
     _type: "user",
@@ -53,9 +55,14 @@ export async function getVisits(): Promise<Visit[]> {
 }
 // {_id, visitName, visitedAt, nurseName, numCnslts, visitPhoto,
 
-export const getSanityImageUrl = (image: { asset?: { _ref?: string } }): string | undefined => {
+export const getSanityImageUrl = (image: {
+  asset?: { _ref?: string };
+}): string | undefined => {
   if (!image || !image.asset || typeof image.asset._ref !== "string") {
-    console.error("Invalid Sanity image object ⚠️ image 필드가 잘못된 형식입니다: ", image);
+    console.error(
+      "Invalid Sanity image object ⚠️ image 필드가 잘못된 형식입니다: ",
+      image
+    );
     return undefined;
   }
 
@@ -116,7 +123,7 @@ export async function getConsultByCompanyByEmployeeByVisit(
   );
 }
 
-export async function saveConsult(body: Record<string, any>) {
+export async function saveConsult(body: Record<string, unknown>) {
   return sanityClient.create({
     _type: "consult",
     ...body,
@@ -142,7 +149,9 @@ export async function saveConsult(body: Record<string, any>) {
 //  return consults;
 // }
 
-export async function getEmployeesByCompany(company: string):Promise<Employee[]> {
+export async function getEmployeesByCompany(
+  company: string
+): Promise<Employee[]> {
   const results = await sanityClient.fetch(
     `*[_type == "consult" && whichCompany -> _id == "${company}"]  | order(employeeName asc, _createdAt asc)  {
     "key": employeeName + birthYear,
@@ -156,12 +165,14 @@ export async function getEmployeesByCompany(company: string):Promise<Employee[]>
   );
   // JavaScript로 중복 제거
   const seen = new Set();
-  const uniqueEmployees = results.filter((item: any) => {
-    const key = item.name + item.birthYear;
-    if (seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  });
+  const uniqueEmployees = results.filter(
+    (item: { name: string; birthYear: string }) => {
+      const key = item.name + item.birthYear;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    }
+  );
   return uniqueEmployees;
 }
 
@@ -179,10 +190,7 @@ export async function getEmployeeByCompany(
     "birthYear": birthYear,
     "sex": gender
     }`,
-    { company,
-      employeeName,
-      birthYear
-    }
+    { company, employeeName, birthYear }
   );
 }
 
@@ -232,10 +240,7 @@ export async function getConsultResultsByEmployeeByCompany(
       "exercise": exercise,
       "comments": comments,
     }`,
-    { company,
-      employeeName,
-      birthYear
-    }
+    { company, employeeName, birthYear }
   );
 }
 
@@ -243,11 +248,16 @@ export async function getConsultResultsByEmployeeByCompany(
 
 const builder = imageUrlBuilder(sanityClient);
 
-export function urlFor(source: any) {
-  if (!source || !source.asset || !source.asset._ref) {
+export function urlFor(source: SanityImageSource) {
+  if (
+    !source ||
+    typeof source !== "object" ||
+    !("asset" in source) ||
+    !source.asset ||
+    !(" _ref" in source.asset)
+  ) {
     console.warn("⚠️ image 필드가 잘못된 형식입니다:", source);
     return null;
   }
-
   return builder.image(source);
 }

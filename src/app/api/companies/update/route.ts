@@ -1,13 +1,7 @@
 // File: app/api/companies/update/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import sanityClient from "@/lib/sanityClient";
-
-type CompanyUpdateFields = {
-  [key: string]:
-    | string
-    | boolean
-    | { _type: "image"; asset: { _type: "reference"; _ref: string } };
-};
+import { UpdateCompany } from "@/model/company";
 
 export async function PATCH(req: NextRequest) {
   try {
@@ -20,12 +14,10 @@ export async function PATCH(req: NextRequest) {
     formData.forEach((val, key) => {
       if (key === "logo") return; // 파일 처리 따로
 
-      const stringVal = typeof val === "string" ? val : String(val);
-
       if (key === "isContract") {
-        updateFields[key] = stringVal === "true";
+        updateFields[key as keyof UpdateCompany] = val === "true";
       } else {
-        updateFields[key] = stringVal;
+        updateFields[key as keyof UpdateCompany] = val.toString();
       }
     });
 

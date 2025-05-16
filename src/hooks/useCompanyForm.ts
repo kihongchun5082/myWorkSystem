@@ -46,15 +46,19 @@ export default function useCompanyForm(selectedCompany?: Company) {
       const selectedImage: SanityImage | null =
         selectedCompany.image &&
         typeof selectedCompany.image === "object" &&
-        "asset" in selectedCompany.image && typeof selectedCompany.image.asset?._ref === 'string'
-          ? {
+        "asset" in selectedCompany.image 
+        && selectedCompany.image.asset &&
+        "_ref" in selectedCompany.image.asset
+        // && typeof selectedCompany.image.asset?._ref === 'string'
+
+        ? {
               _type: "image",
               asset: {
                 _type: "reference",
                 _ref: selectedCompany.image.asset._ref,
               },
-            }
-          : null;
+           }
+         : null;
       // const newForm: CompanyFormType = {
       //   companyName: selectedCompany.companyName || "",
       //   companyId: selectedCompany.companyId || "",

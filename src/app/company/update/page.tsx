@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import Script from "next/script";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -22,10 +22,14 @@ export default function CompanyUpdatePage() {
   const {
     form,
     logo,
-    setForm,
+    // setForm,
+    // setLogo,
     handleChange,
     handleFileChange,
-  } = useCompanyForm(selectedCompany ?? undefined); // ✅ selectedCompany 전달
+    // resetForm,
+    searchAddress,
+  } = useCompanyForm();
+  // } = useCompanyForm(selectedCompany ?? undefined); 
 
   const handleUpdate = async () => {
     if (!selectedCompany) return;
@@ -62,22 +66,6 @@ export default function CompanyUpdatePage() {
     } catch (err) {
       console.error("수정 중 오류 발생:", err);
       alert("서버 오류가 발생했습니다.");
-    }
-  };
-
-  const searchAddress = () => {
-    if (typeof window !== "undefined" && (window as any).daum?.Postcode) {
-      new (window as any).daum.Postcode({
-        oncomplete: function (data: DaumPostcodeData) {
-          setForm((prev) => ({
-            ...prev,
-            address: data.address,
-            zipCode: data.zonecode,
-          }));
-        },
-      }).open();
-    } else {
-      alert("주소 검색 스크립트가 아직 로드되지 않았습니다.");
     }
   };
 
