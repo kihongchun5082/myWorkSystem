@@ -2,6 +2,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import sanityClient from "@/lib/sanityClient";
 
+type CompanyUpdateFields = {
+  [key: string]:
+    | string
+    | boolean
+    | { _type: "image"; asset: { _type: "reference"; _ref: string } };
+};
+
 export async function PATCH(req: NextRequest) {
   try {
     const formData = await req.formData();
@@ -9,12 +16,16 @@ export async function PATCH(req: NextRequest) {
     if (!_id) return new Response("Missing company ID", { status: 400 });
 
     const updateFields: Record<string, any> = {};
+
     formData.forEach((val, key) => {
       if (key === "logo") return; // 파일 처리 따로
+
+      const stringVal = typeof val === "string" ? val : String(val);
+
       if (key === "isContract") {
-        updateFields[key] = val === "true";
+        updateFields[key] = stringVal === "true";
       } else {
-        updateFields[key] = val;
+        updateFields[key] = stringVal;
       }
     });
 
@@ -35,10 +46,7 @@ export async function PATCH(req: NextRequest) {
       };
     }
 
-    const updated = await sanityClient
-      .patch(_id)
-      .set(updateFields)
-      .commit();
+    const updated = await sanityClient.patch(_id).set(updateFields).commit();
 
     return NextResponse.json({ success: true, updated });
   } catch (error) {

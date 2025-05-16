@@ -1,18 +1,19 @@
+// Sanity의 이미지 타입 정의
+export type SanityImage = {
+  _type: "image";
+  asset: {
+    _type: "reference";
+    _ref: string;
+  };
+};
+
 export type Employee = {
  id: string;
  name: string;
  birthYear: string ;
-//  company:  {
-//   _type: "reference",
-//   _ref: string,
-// };
-//  companyName:  {
-//   _type: "reference",
-//   _ref: string,
-// };
  company: string;
  companyName: string;  
- sex: "M" | "F" | string;
+ sex: "M" | "F" ;
 }
 
 export type VisitInfo = {
@@ -20,7 +21,7 @@ export type VisitInfo = {
   visitedAt: string;
   nurseName: string;
   numCnslts: number;
-  visitPhoto?: any; // string[]필요시 Image 타입 지정
+  visitPhoto?: SanityImage[];  // 이미지 배열로 명확히 지정
   visitDate: string;
   nurse: string;
   id: string;
@@ -30,7 +31,7 @@ export type ConsultResults = {
   id: string;
   name: string;
   birthYear: string;
-  sex: "M" | "F" | string;
+  sex: "M" | "F" ;
   company: string;
   companyName: string;
   visitId: string;

@@ -2,29 +2,61 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+interface ConsultFormProps {
+  visitId: string;
+  company: string;
+  visitDate: string;
+}
+
+interface FormDataType {
+  employeeName?: string;
+  birthYear?: string;
+  gender?: string;
+  age?: string;
+  bp?: string;
+  bpAtScreen?: string;
+  fbsAtScreen?: string;
+  hbA1C?: string;
+  pp2hrBs?: string;
+  isHtMed?: boolean;
+  isDmMed?: boolean;
+  isCholMed?: boolean;
+  isHtFamHx?: boolean;
+  isDmFamHx?: boolean;
+  isCholFamHx?: boolean;
+  wc?: string;
+  height?: string;
+  weight?: string;
+  bmi?: string;
+  hb?: string;
+  lft?: string;
+  lipidPanel?: string;
+  urineProtein?: string;
+  smoking?: string;
+  drinking?: string;
+  exercise?: string;
+  comments?: string;
+}
+
 export default function ConsultForm({
   visitId,
   company,
   visitDate,
-}: {
-  visitId: string;
-  company: string;
-  visitDate: string;
-}) {
+}: ConsultFormProps) {
 
-  console.log("seletedCompany_conponent/ConsultForm: ", company);
-  console.log("visitId_conponent/ConsultForm: ", visitId);
-  console.log("visitDate_conponent/ConsultForm: ", visitDate);
+  // console.log("seletedCompany_conponent/ConsultForm: ", company);
+  // console.log("visitId_conponent/ConsultForm: ", visitId);
+  // console.log("visitDate_conponent/ConsultForm: ", visitDate);
 
   const router = useRouter();
-  const [employeeName, setEmployeeName] = useState("");
-  const [birthYear, setBirYear] = useState("");
-  const [formData, setFormData] = useState<any>({});  
-  const [isVerified, setIsVerified] = useState(false);
-  const [isAlreadyEntered, setIsAlreadyEntered] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false); // ⭐ 추가
-  const [isEditMode, setIsEditMode] = useState(false); // ⭐ 추가
+  const [employeeName, setEmployeeName] = useState<string>("");
+  const [birthYear, setBirYear] = useState<string>("");
+  const [formData, setFormData] = useState<FormDataType>({});  
+  const [isVerified, setIsVerified] = useState<boolean>(false);
+  const [isAlreadyEntered, setIsAlreadyEntered] = useState<boolean>(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false); // ⭐ 추가
+  const [isEditMode, setIsEditMode] = useState<boolean>(false); // ⭐ 추가
   const [consultId, setConsultId] = useState<string | null>(null); // ⭐ 추가
 
   const handleVerify = async (e: React.FormEvent) => {
@@ -67,7 +99,7 @@ export default function ConsultForm({
     >
   ) => {
     const { name, value, type, checked } = e.target as HTMLInputElement;
-    setFormData((prev: any) => ({
+    setFormData((prev: FormDataType) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
@@ -326,7 +358,7 @@ export default function ConsultForm({
                 name="hbA1C"
                 placeholder="당화혈색소"
                 size={10}
-                value={formData.hbA1c || ""}
+                value={formData.hbA1C || ""}
                 onChange={handleChange}
               />
               {/* <label htmlFor="employeeName">식후2시간혈당</label> */}
@@ -354,7 +386,7 @@ export default function ConsultForm({
                     type="checkbox"
                     // id="isHtMed"
                     name="isHtMed"
-                    checked={formData.isHtMed || ""}
+                    checked={ !!formData.isHtMed }
                     onChange={handleChange}
                   />
                   <label htmlFor="isHtMed">고혈압</label>
@@ -364,7 +396,7 @@ export default function ConsultForm({
                     type="checkbox"
                     // id="isDmMed"
                     name="isDmMed"
-                    checked={formData.isDmMed || ""}
+                    checked={ !!formData.isDmMed }
                     onChange={handleChange}
                   />
                   <label htmlFor="isDmMed">당뇨병</label>
@@ -374,7 +406,7 @@ export default function ConsultForm({
                     type="checkbox"
                     // id="isCholMed"
                     name="isCholMed"
-                    checked={formData.isCholMed || ""}
+                    checked={ !!formData.isCholMed }
                     onChange={handleChange}
                   />
                   <label htmlFor="isCholMed">고지혈증</label>
@@ -389,7 +421,7 @@ export default function ConsultForm({
                     type="checkbox"
                     // id="isHtFamHx"
                     name="isHtFamHx"
-                    checked={formData.isHtFamHx || ""}
+                    checked={ !!formData.isHtFamHx }
                     onChange={handleChange}
                   />
                   <label htmlFor="isHtFamHx">고혈압</label>
@@ -399,7 +431,7 @@ export default function ConsultForm({
                     type="checkbox"
                     // id="isDmFamHx"
                     name="isDmFamHx"
-                    checked={formData.isDmFamHx || ""}
+                    checked={ !!formData.isDmFamHx }
                     onChange={handleChange}
                   />
                   <label htmlFor="isDmFamHx">당뇨병</label>
@@ -409,7 +441,7 @@ export default function ConsultForm({
                     type="checkbox"
                     // id="isCholFamHx"
                     name="isCholFamHx"
-                    checked={formData.isCholFamHx || ""}
+                    checked={ !!formData.isCholFamHx }
                     onChange={handleChange}
                   />
                   <label htmlFor="isCholFamHx">고지혈증</label>
@@ -495,7 +527,7 @@ export default function ConsultForm({
                 name="urineProtein"
                 placeholder="단백뇨(+)"
                 size={6}
-                value={formData.urinePanel || ""}
+                value={formData.urineProtein || ""}
                 onChange={handleChange}
               />
             </fieldset>

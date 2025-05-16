@@ -8,6 +8,12 @@ import { useCompany } from "@/context/CompanyContext";
 import { urlFor } from "@/lib/sanityImage";
 import useCompanyForm from "@/hooks/useCompanyForm";
 
+type DaumPostcodeData = {
+  address: string;
+  zonecode: string;
+  [key: string]: unknown;
+};
+
 export default function CompanyUpdatePage() {
   const { selectedCompany } = useCompany();
   const router = useRouter();
@@ -17,35 +23,9 @@ export default function CompanyUpdatePage() {
     form,
     logo,
     setForm,
-    // setLogo,
     handleChange,
     handleFileChange,
-    // resetForm
-  } = useCompanyForm();
-
-  useEffect(() => {
-    if (selectedCompany)
-      setForm({
-        ...selectedCompany,
-        isContract: selectedCompany.isContract ?? false,
-      });
-  }, [selectedCompany, setForm]);
-
-  const searchAddress = () => {
-    if (typeof window !== "undefined" && (window as any).daum?.Postcode) {
-      new (window as any).daum.Postcode({
-        oncomplete: function (data: any) {
-          setForm((prev) => ({
-            ...prev,
-            address: data.address,
-            zipCode: data.zonecode,
-          }));
-        },
-      }).open();
-    } else {
-      alert("주소 검색 스크립트가 아직 로드되지 않았습니다.");
-    }
-  };
+  } = useCompanyForm(selectedCompany ?? undefined); // ✅ selectedCompany 전달
 
   const handleUpdate = async () => {
     if (!selectedCompany) return;
@@ -62,6 +42,7 @@ export default function CompanyUpdatePage() {
         formData.append(key, "");
       }
     });
+
     if (logo) formData.append("logo", logo);
     formData.append("_id", selectedCompany._id);
 
@@ -81,6 +62,22 @@ export default function CompanyUpdatePage() {
     } catch (err) {
       console.error("수정 중 오류 발생:", err);
       alert("서버 오류가 발생했습니다.");
+    }
+  };
+
+  const searchAddress = () => {
+    if (typeof window !== "undefined" && (window as any).daum?.Postcode) {
+      new (window as any).daum.Postcode({
+        oncomplete: function (data: DaumPostcodeData) {
+          setForm((prev) => ({
+            ...prev,
+            address: data.address,
+            zipCode: data.zonecode,
+          }));
+        },
+      }).open();
+    } else {
+      alert("주소 검색 스크립트가 아직 로드되지 않았습니다.");
     }
   };
 

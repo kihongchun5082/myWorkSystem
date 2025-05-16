@@ -1,5 +1,6 @@
 "use client";
 
+import { Employee } from "@/model/employee";
 import { useCompany } from "@/context/CompanyContext";
 import { useState } from "react";
 import useSWR from "swr";
@@ -23,7 +24,7 @@ export default function EmployeeSearchPage() {
     data: employees,
     isLoading,
     error,
-  } = useSWR(shouldFetch ? query : null);
+  } = useSWR<Employee[]>(shouldFetch ? query : null);
 
   console.log("employees_component/EmployeeSearch: ", employees);
 
@@ -79,7 +80,7 @@ export default function EmployeeSearchPage() {
         )}
         <ul className=" w-full p-4">
         {selectedCompany && employees &&
-          employees.map((emp: any) => (
+          employees.map((emp) => (
             <li key={emp.id}>
               <EmployeeCardPage employee={emp}
                />

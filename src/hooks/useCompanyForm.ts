@@ -3,18 +3,28 @@ import { useState, useRef, ChangeEvent, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Company } from "@/model/company";
 
-export default function useCompanyForm(selectedCompany?: Company) {
-  type CompanyFormType = {
-    companyName: string;
-    companyId: string;
-    address: string;
-    zipCode: string;
-    telNumber: string;
-    numEmployees: string;
-    managerName: string;
-    isContract: boolean;
-    image: string | { asset: { _ref: string } } | null;
+// Sanity Image 타입 정의
+type SanityImage = {
+  _type: "image";
+  asset: {
+    _type: "reference";
+    _ref: string;
   };
+};
+
+type CompanyFormType = {
+  companyName: string;
+  companyId: string;
+  address: string;
+  zipCode: string;
+  telNumber: string;
+  numEmployees: string;
+  managerName: string;
+  isContract: boolean;
+  image: SanityImage | null;
+};
+
+export default function useCompanyForm(selectedCompany?: Company) {
   const [form, setForm] = useState<CompanyFormType>({
     companyName: "",
     companyId: "",
@@ -26,22 +36,49 @@ export default function useCompanyForm(selectedCompany?: Company) {
     isContract: false,
     image: null,
   });
+
   const [logo, setLogo] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+
   useEffect(() => {
     if (selectedCompany) {
-      setForm({
-        companyName: selectedCompany.companyName || "",
-        companyId: selectedCompany.companyId || "",
-        address: selectedCompany.address || "",
-        zipCode: selectedCompany.zipCode || "",
-        telNumber: selectedCompany.telNumber || "",
-        numEmployees: selectedCompany.numEmployees || "",
-        managerName: selectedCompany.managerName || "",
-        isContract: selectedCompany.isContract ?? false,
-        image: selectedCompany.image || null,
-      })
+      const selectedImage: SanityImage | null =
+        selectedCompany.image &&
+        typeof selectedCompany.image === "object" &&
+        "asset" in selectedCompany.image && typeof selectedCompany.image.asset?._ref === 'string'
+          ? {
+              _type: "image",
+              asset: {
+                _type: "reference",
+                _ref: selectedCompany.image.asset._ref,
+              },
+            }
+          : null;
+      // const newForm: CompanyFormType = {
+      //   companyName: selectedCompany.companyName || "",
+      //   companyId: selectedCompany.companyId || "",
+      //   address: selectedCompany.address || "",
+      //   zipCode: selectedCompany.zipCode || "",
+      //   telNumber: selectedCompany.telNumber || "",
+      //   numEmployees: selectedCompany.numEmployees || "",
+      //   managerName: selectedCompany.managerName || "",
+      //   isContract: selectedCompany.isContract ?? false,
+      //   image: selectedImage,
+      // }
+      // setForm(newForm)
+      setForm((prev) => ({
+      ...prev,
+      companyName: selectedCompany.companyName || "",
+      companyId: selectedCompany.companyId || "",
+      address: selectedCompany.address || "",
+      zipCode: selectedCompany.zipCode || "",
+      telNumber: selectedCompany.telNumber || "",
+      numEmployees: selectedCompany.numEmployees || "",
+      managerName: selectedCompany.managerName || "",
+      isContract: selectedCompany.isContract ?? false,
+      image: selectedImage,
+    }));
     }
   }, [selectedCompany]);
 
@@ -60,15 +97,15 @@ export default function useCompanyForm(selectedCompany?: Company) {
 
   const resetForm = () => {
     setForm({
-     companyName: "",
-     companyId: "",
-     address: "",
-     zipCode: "",
-     telNumber: "",
-     numEmployees: "",
-     managerName: "",
-     isContract: false,
-     image: null,
+      companyName: "",
+      companyId: "",
+      address: "",
+      zipCode: "",
+      telNumber: "",
+      numEmployees: "",
+      managerName: "",
+      isContract: false,
+      image: null,
     });
     setLogo(null);
     if (fileInputRef.current) {
@@ -77,15 +114,9 @@ export default function useCompanyForm(selectedCompany?: Company) {
   };
 
   const searchAddress = () => {
-    if (typeof window !== "undefined" && (window as any).daum?.Postcode) {
-
-      console.log(
-        "(window as any).daum?.Postcode: ",
-        (window as any).daum?.Postcode
-      );
-
-      new (window as any).daum.Postcode({
-        oncomplete: function (data: any) {
+    if (typeof window !== "undefined" && window.daum?.Postcode) {
+      new window.daum.Postcode({
+        oncomplete: function (data) {
           setForm((prev) => ({
             ...prev,
             address: data.address,
@@ -94,29 +125,25 @@ export default function useCompanyForm(selectedCompany?: Company) {
         },
       }).open();
     } else {
-
-      console.log(
-        "(window as any).daum?.Postcode: ",
-        (window as any).daum?.Postcode
-      );
-      
       alert("주소 검색 스크립트가 아직 로드되지 않았습니다.");
     }
   };
 
   const handleSubmit = async () => {
     const formData = new FormData();
-    Object.entries(form).forEach(([key, val]) => {
-      if (typeof val === "boolean") {
-        formData.append(key, val ? "true" : "false");
-      } else if (typeof val === "string") {
-        formData.append(key, val);
-      } else if (val !== undefined && val !== null) {
-        formData.append(key, String(val));
-      } else {
-        formData.append(key, "");
+    (Object.entries(form) as [keyof CompanyFormType, unknown][]).forEach(
+      ([key, val]) => {
+        if (typeof val === "boolean") {
+          formData.append(key, val ? "true" : "false");
+        } else if (typeof val === "string") {
+          formData.append(key, val);
+        } else if (val !== undefined && val !== null) {
+          formData.append(key, String(val));
+        } else {
+          formData.append(key, "");
+        }
       }
-    });
+    );
     if (logo) formData.append("logo", logo);
 
     try {

@@ -1,4 +1,9 @@
 import sanityClient from "@/lib/sanityClient";
+import { Company } from "@/model/company";
+import { Employee, ConsultResults } from "@/model/employee";
+import { Visit } from "@/model/visit";
+
+import imageUrlBuilder from "@sanity/image-url";
 
 type OAuthUser = {
   id: string;
@@ -9,33 +14,37 @@ type OAuthUser = {
   image?: string | null;
   createdAt: string;
 };
-export async function addUser({
-  name,
-  username,
-  userId,
-  email,
-  image,
-  createdAt,
-}: OAuthUser) {
+export async function addUser(
+  // {
+  // name,
+  // username,
+  // userId,
+  // email,
+  // image,
+  // createdAt,
+  // }
+  // : OAuthUser) {
+  user: OAuthUser) {
   return sanityClient.createIfNotExists({
-    _id: username,
+    _id: user.username,
     _type: "user",
-    name,
-    username,
-    userId,
-    email,
-    image,
-    createdAt,
+    ...user,
+    // name,
+    // username,
+    // userId,
+    // email,
+    // image,
+    // createdAt,
   });
 }
 
-export async function getCompanies() {
+export async function getCompanies(): Promise<Company[]> {
   return sanityClient.fetch(
     '*[_type == "company"] | order(companyName) {_id, companyName, address, zipCode, telNumber, numEmployees, managerName, isContract, companyId, image}'
   );
 }
 
-export async function getVisits() {
+export async function getVisits(): Promise<Visit[]> {
   return sanityClient.fetch(
     `*[_type == "visit"] | order(visitName){
   ...,
@@ -44,7 +53,7 @@ export async function getVisits() {
 }
 // {_id, visitName, visitedAt, nurseName, numCnslts, visitPhoto,
 
-export const getSanityImageUrl = (image: { asset?: { _ref?: string } }) => {
+export const getSanityImageUrl = (image: { asset?: { _ref?: string } }): string | undefined => {
   if (!image || !image.asset || typeof image.asset._ref !== "string") {
     console.error("Invalid Sanity image object ⚠️ image 필드가 잘못된 형식입니다: ", image);
     return undefined;
@@ -66,7 +75,7 @@ export const getSanityImageUrl = (image: { asset?: { _ref?: string } }) => {
   // return `${baseUrl}/${ref}${paramsStart}${shape}${addParams}${size}`
 };
 
-export async function getVisitsByCompany(company: string) {
+export async function getVisitsByCompany(company: string): Promise<Visit[]> {
   return sanityClient.fetch(
     `*[_type == "visit" && visitCompany->_id == "${company}"]  {
     "id": _id,
@@ -80,7 +89,7 @@ export async function getVisitsByCompany(company: string) {
   );
 }
 
-export async function getVisitByVisitId(visitId: string) {
+export async function getVisitByVisitId(visitId: string): Promise<Visit> {
   return sanityClient.fetch(
     `*[_type == "visit" && _id == $visitId][0] {
       "id": _id,
@@ -100,14 +109,14 @@ export async function getConsultByCompanyByEmployeeByVisit(
   employee: string,
   birthYear: string,
   visitId: string
-) {
+): Promise<ConsultResults | null> {
   return sanityClient.fetch(
     `*[_type == "consult" && whichCompany->_id == "${company}" && employeeName=="${employee}" && birthYear=="${birthYear}" && visitId == "${visitId}"][0]
    `
   );
 }
 
-export async function saveConsult(body: any) {
+export async function saveConsult(body: Record<string, any>) {
   return sanityClient.create({
     _type: "consult",
     ...body,
@@ -121,18 +130,19 @@ export async function saveConsult(body: any) {
   });
 }
 
-export async function getConsultsBycompanyName(company: string) {
-  const consults = sanityClient.fetch(
-    `*[_type == "consult" && whichCompany -> _id == "${company}"]  {
-    "id": _id,
-    "name": employeeName,
-    "birthYear": birthYear,
-    "sex": gender
-    }`
-  );
-}
+// export async function getConsultsBycompanyName(company: string): Promise<Employee[]> {
+//   const consults = sanityClient.fetch(
+//     `*[_type == "consult" && whichCompany -> _id == "${company}"]  {
+//     "id": _id,
+//     "name": employeeName,
+//     "birthYear": birthYear,
+//     "sex": gender
+//     }`
+//   );
+//  return consults;
+// }
 
-export async function getEmployeesByCompany(company: string) {
+export async function getEmployeesByCompany(company: string):Promise<Employee[]> {
   const results = await sanityClient.fetch(
     `*[_type == "consult" && whichCompany -> _id == "${company}"]  | order(employeeName asc, _createdAt asc)  {
     "key": employeeName + birthYear,
@@ -159,7 +169,7 @@ export async function getEmployeeByCompany(
   company: string,
   employeeName: string,
   birthYear: string
-) {
+): Promise<Employee | null> {
   return sanityClient.fetch(
     `*[_type == "consult" && whichCompany -> _id == $company && employeeName == $employeeName && birthYear == $birthYear][0] {
     "id": _id,
@@ -180,7 +190,7 @@ export async function getConsultResultsByEmployeeByCompany(
   company: string,
   employeeName: string,
   birthYear: string
-) {
+): Promise<ConsultResults[]> {
   return sanityClient.fetch(
     `*[_type == "consult" && whichCompany -> _id == $company && employeeName == $employeeName && birthYear == $birthYear] {
       "id": _id,
@@ -230,7 +240,6 @@ export async function getConsultResultsByEmployeeByCompany(
 }
 
 // lib/sanityImage.ts
-import imageUrlBuilder from "@sanity/image-url";
 
 const builder = imageUrlBuilder(sanityClient);
 

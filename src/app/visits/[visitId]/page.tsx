@@ -7,10 +7,25 @@ import { useParams } from "next/navigation";
 import { useState } from "react";
 import useSWR from "swr";
 
+type SanityImageType = {
+  _type: "image";
+  asset: {
+    _ref: string;
+    _type: "reference";
+  };
+  isChoosen?: boolean;
+};
+
+interface VisitData {
+  id: string;
+  visitName: string;
+  when: string;
+  docImage?: SanityImageType[];
+}
+
 export default function VisitDetailPage() {
   const { selectedCompany } = useCompany();
   const { visitId } = useParams<{visitId: string;}>();
-
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   // const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
 
@@ -18,12 +33,12 @@ export default function VisitDetailPage() {
     data: visit,
     isLoading,
     error,
-  } = useSWR(`/api/visits/${visitId}`);
+   } = useSWR<VisitData>(`/api/visits/${visitId}`);
 
   console.log("visit_app/visits/[company]/[visitId]/page: ", visit);
 
   if (error) return <p>이미지를 불러오는 중 오류가 발생했습니다.</p>;
-  if (isLoading) return <p>로딩 중...</p>;
+  if (isLoading || !visit) return <p>로딩 중...</p>;
 
   return (
     <div className="w-full flex flex-row max-w-4xl">
@@ -52,7 +67,7 @@ export default function VisitDetailPage() {
         {/* List Images */}
         <div className="flex gap-3 overflow-auto">
          {visit?.docImage?.length ? (
-          visit.docImage.map((image: any, index: number) => {
+          visit.docImage.map((image, index) => {
             const imageUrl = getSanityImageUrl(image);
             const isChoosenY = image?.isChoosen ?? false;
             return (
