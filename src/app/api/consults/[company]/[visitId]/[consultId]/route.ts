@@ -7,9 +7,9 @@ type ConsultUpdateBody = {
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { consultId: string } }
+  context: { params: Record<string, string> }
 ) {
-  const { consultId } = params;
+  const { consultId } = context.params;
   let body: ConsultUpdateBody;
   try {
     body = await req.json();
@@ -33,7 +33,7 @@ export async function PATCH(
     }
     const updatedConsult = await sanityClient
       .patch(consultId)
-      .set(body)
+      .set(cleanedBody)
       .commit();
 
     return NextResponse.json(updatedConsult);
