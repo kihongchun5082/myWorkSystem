@@ -1,4 +1,3 @@
-import { Context } from './../../../../../node_modules/eslint-module-utils/contextCompat.d';
 import { auth } from "@/auth";
 import { NextRequest, NextResponse } from "next/server";
 import sanityClient from "@/lib/sanityClient";
