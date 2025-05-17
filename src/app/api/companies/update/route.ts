@@ -9,18 +9,46 @@ export async function PATCH(req: NextRequest) {
     const _id = formData.get("_id")?.toString();
     if (!_id) return new Response("Missing company ID", { status: 400 });
 
-    const updateFields: Record<string, any> = {};
+    const updateFields: Partial<UpdateCompany> = {};
 
     formData.forEach((val, key) => {
       if (key === "logo") return; // 파일 처리 따로
 
-      if (key === "isContract") {
-        updateFields[key as keyof UpdateCompany] = val === "true";
-      } else {
-        updateFields[key as keyof UpdateCompany] = val.toString();
+      // if (key === "isContract") {
+      //   updateFields[key as keyof UpdateCompany] = val === "true" ;
+      // } else {
+      //   updateFields[key as keyof UpdateCompany] = val.toString();
+      // }
+
+      switch (key) {
+        case "isContract":
+          updateFields.isContract = val === "true";
+          break;
+        case "companyName":
+          updateFields.companyName = val.toString();
+          break;
+        case "companyId":
+          updateFields.companyId = val.toString();
+          break;
+        case "address":
+          updateFields.address = val.toString();
+          break;
+        case "zipCode":
+          updateFields.zipCode = val.toString();
+          break;
+        case "telNumber":
+          updateFields.telNumber = val.toString();
+          break;
+        case "numEmployees":
+          updateFields.numEmployees = val.toString();
+          break;
+        case "managerName":
+          updateFields.managerName = val.toString();
+          break;
+        default:
+          console.warn(`Unhandled form field: ${key}`);
       }
     });
-
     // 파일이 있을 경우 업로드
     const file = formData.get("logo");
     if (file instanceof File) {

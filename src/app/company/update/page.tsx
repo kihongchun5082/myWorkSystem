@@ -8,11 +8,11 @@ import { useCompany } from "@/context/CompanyContext";
 import { urlFor } from "@/lib/sanityImage";
 import useCompanyForm from "@/hooks/useCompanyForm";
 
-type DaumPostcodeData = {
-  address: string;
-  zonecode: string;
-  [key: string]: unknown;
-};
+// type DaumPostcodeData = {
+//   address: string;
+//   zonecode: string;
+//   [key: string]: unknown;
+// };
 
 export default function CompanyUpdatePage() {
   const { selectedCompany } = useCompany();
