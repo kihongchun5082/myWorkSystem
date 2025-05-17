@@ -7,7 +7,8 @@ type ConsultUpdateBody = {
 
 export async function PATCH(
   req: NextRequest,
-  context: { params: Record<string, string> }
+  context: { params: { [key: string]: string }}
+  // context: any
 ) {
   const { consultId } = context.params;
   let body: ConsultUpdateBody;
