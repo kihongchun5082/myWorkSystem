@@ -7,10 +7,9 @@ type ConsultUpdateBody = {
 
 export async function PATCH(
   req: NextRequest,
-  context: { params: { [key: string]: string }}
-  // context: any
+  context: { params: Promise<{ [key: string]: string }> }
 ) {
-  const { consultId } = context.params;
+  const { consultId } = await context.params;
   let body: ConsultUpdateBody;
   try {
     body = await req.json();
