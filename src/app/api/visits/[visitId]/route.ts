@@ -1,3 +1,4 @@
+import { Context } from './../../../../../node_modules/eslint-module-utils/contextCompat.d';
 import { auth } from "@/auth";
 import { NextRequest, NextResponse } from "next/server";
 import sanityClient from "@/lib/sanityClient";
@@ -36,13 +37,13 @@ export async function GET(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { visitId: string } }
+  context: { params: Promise<{ visitId: string }> }
 ) {
   const session = await auth();
   const user = session?.user;
   if (!user) return new Response("Unauthorized", { status: 401 });
 
-  const { visitId } = await params;
+  const { visitId } = await context.params;
   if (!visitId) return new Response("Invalid visit id", { status: 400 });
 
   try {
