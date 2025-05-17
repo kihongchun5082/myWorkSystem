@@ -4,14 +4,14 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { company: string } }
+  context: { params: Promise<{ company: string }> }
 ) {
   const session = await auth();
   const user = session?.user;
   if (!user) {
     return new Response("잘못된 사용자입니다.", { status: 401 });
   }
-  const { company } = await params;
+  const { company } = await context.params;
 
   console.log('company_api/employee/[company]/route: ',company)
 

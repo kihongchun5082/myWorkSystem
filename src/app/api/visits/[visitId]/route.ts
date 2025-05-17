@@ -6,7 +6,7 @@ import { getVisitByVisitId } from "@/service/sanity";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { visitId: string } }
+  context: { params: Promise<{ visitId: string }> }
 ) {
   
   const session = await auth();
@@ -14,7 +14,7 @@ export async function GET(
   if (!user) {
     return new Response("잘못된 사용자입니다.", { status: 401 });
   }
-  const { visitId } = await params;
+  const { visitId } = await context.params;
 
   console.log("visitId_api/visits/[visitId]/route: ", visitId);
 

@@ -2,9 +2,9 @@ import sanityClient from "@/lib/sanityClient";
 import { NextRequest, NextResponse } from "next/server";
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { visitId: string } }
+  context: { params: Promise<{ visitId: string }> }
 ) {
-  const { visitId } = await params;
+  const { visitId } = await context.params;
   const { index } = await req.json();
   
   console.log("index_visits[visitId]: ", index);
