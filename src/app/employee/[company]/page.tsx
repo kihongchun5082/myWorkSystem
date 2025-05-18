@@ -36,5 +36,9 @@ export default async function EmployeeConsultsPage({
   );
   console.log('consultResults_employee/[company]/page: ',consultResults)
 
+  if (!employee) {
+  return <p>해당 근로자를 찾을 수 없습니다.</p>;
+}
+
   return <EmployeeConsultsProfile consultResults={consultResults} employee={employee} />;
 }
