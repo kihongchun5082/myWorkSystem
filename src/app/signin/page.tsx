@@ -23,7 +23,7 @@ export default async function SignInPage( context: Promise<{ callbackUrl: string
 
   return (
     <section className=" flex justify-center mt-24">
-      <SignIn callbackUrl={(await context).callbackUrl ?? '/'} />
+      <SignIn callbackUrl={url ?? '/'} />
     </section>
   )
 }
