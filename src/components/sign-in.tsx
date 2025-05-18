@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 // const providers = await getProviders() ?? {};
 // console.log('providers1_sign-in: ',providers)
+
 type AuthProvider = {
   id: string;
   name: string;
