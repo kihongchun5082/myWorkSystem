@@ -1,4 +1,5 @@
 // import { User } from "@/model/user";
+import NextAuth, { DefaultSession, DefaultUser } from "next-auth";
 
 declare module 'next-auth' {
  interface Session {
@@ -10,7 +11,7 @@ declare module 'next-auth' {
    email: string;
    image?: string | null;
    createdAt: string;
-  }
+  } & DefaultSession["user"]
   company: {
    companyName?: string | null;
    companyId?: string | null;

@@ -1,42 +1,18 @@
 import sanityClient from "@/lib/sanityClient";
 import { Company } from "@/model/company";
 import { Employee, ConsultResults } from "@/model/employee";
+import { OAuthUser } from "@/model/user";
 import { Visit } from "@/model/visit";
-
 import imageUrlBuilder from "@sanity/image-url";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 
-type OAuthUser = {
-  id: string;
-  name: string | undefined | null;
-  username: string;
-  userId: string;
-  email: string;
-  image?: string | null;
-  createdAt: string;
-};
 export async function addUser(
-  // {
-  // name,
-  // username,
-  // userId,
-  // email,
-  // image,
-  // createdAt,
-  // }
-  // : OAuthUser) {
   user: OAuthUser
 ) {
   return sanityClient.createIfNotExists({
     _id: user.username,
     _type: "user",
     ...user,
-    // name,
-    // username,
-    // userId,
-    // email,
-    // image,
-    // createdAt,
   });
 }
 
