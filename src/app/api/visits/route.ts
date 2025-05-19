@@ -15,7 +15,9 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const company_Id = searchParams.get("company");
   
-  console.log('company_Id:',company_Id)
+  console.log('companyId_api/visits:',company_Id)
+
+  console.log("✅ projectId from ENV:", process.env.SANITY_PROJECT_ID);
 
   if (!company_Id) {
     return new Response("Missing 'company' query parameter", { status: 400 });
