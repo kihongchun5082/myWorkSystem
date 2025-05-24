@@ -17,7 +17,7 @@ export async function GET(
   const birthYear = searchParams.get("birthYear");
   const employeeName = searchParams.get("employeeName");
 
-  console.log("visitId_api/consults/[company]/[visitId]/route/GET: ", visitId);
+  // console.log("visitId_api/consults/[company]/[visitId]/route/GET: ", visitId);
 
   if (!birthYear || !employeeName) {
     return new Response("birthYear employeeName 쿼리 파라미터 필요", {
@@ -32,10 +32,10 @@ export async function GET(
       visitId
     );
 
-    console.log(
-      "consults_api/consults/[company]/[visitId]/route/getConsultsByVisitId: ",
-      consult
-    );
+    // console.log(
+    //   "consults_api/consults/[company]/[visitId]/route/getConsultsByVisitId: ",
+    //   consult
+    // );
 
     return NextResponse.json(consult);
   } catch (error) {

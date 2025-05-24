@@ -1,8 +1,9 @@
-import { RiSearchLine } from "react-icons/ri";
+// import { RiSearchLine } from "react-icons/ri";
+import { RiUserSearchLine } from "react-icons/ri";
 export default function SearchIcon() {
  return (
   <div>
-   <RiSearchLine  className="w-7 h-7"/>
+   <RiUserSearchLine  className="w-7 h-7"/>
   </div>
  );
 }

@@ -25,7 +25,7 @@ interface VisitData {
 
 export default function VisitDetailPage() {
   const { selectedCompany } = useCompany();
-  const { visitId } = useParams<{visitId: string;}>();
+  const { visitId } = useParams<{ visitId: string }>();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   // const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
 
@@ -33,9 +33,9 @@ export default function VisitDetailPage() {
     data: visit,
     isLoading,
     error,
-   } = useSWR<VisitData>(`/api/visits/${visitId}`);
+  } = useSWR<VisitData>(`/api/visits/${visitId}`);
 
-  console.log("visit_app/visits/[company]/[visitId]/page: ", visit);
+  // console.log("visit_app/visits/[company]/[visitId]/page: ", visit);
 
   if (error) return <p>이미지를 불러오는 중 오류가 발생했습니다.</p>;
   if (isLoading || !visit) return <p>로딩 중...</p>;
@@ -44,19 +44,19 @@ export default function VisitDetailPage() {
     <div className="w-full flex flex-row max-w-4xl">
       {/* Left: Selected Image */}
       <div className="w-2/3 p-2 basis-2/3 min-w-0 justify-center">
-      {/* <div className="w-2/3 p-2 overflow-auto md:basis-1/2 md:justify-center md:min-w-0"> */}
+        {/* <div className="w-2/3 p-2 overflow-auto md:basis-1/2 md:justify-center md:min-w-0"> */}
         <div className=" sticky top-20 md:static">
-        {selectedImage ? (
-          <Image
-            src={selectedImage}
-            alt="Selected"
-            width={500}
-            height={500}
-            className="rounded"
-          />
-        ) : (
-          <p>이미지를 선택하세요.</p>
-        )}
+          {selectedImage ? (
+            <Image
+              src={selectedImage}
+              alt="Selected"
+              width={500}
+              height={500}
+              className="rounded"
+            />
+          ) : (
+            <p>이미지를 선택하세요.</p>
+          )}
         </div>
       </div>
 
@@ -66,53 +66,54 @@ export default function VisitDetailPage() {
 
         {/* List Images */}
         <div className="flex gap-3 overflow-auto">
-         {visit?.docImage?.length ? (
-          visit.docImage.map((image, index) => {
-            const imageUrl = getSanityImageUrl(image);
-            const isChoosenY = image?.isChoosen ?? false;
-            return (
-              <div
-                key={index}
-                className="cursor-pointer flex flex-col items-center"
-              >
+          {visit?.docImage?.length ? (
+            visit.docImage.map((image, index) => {
+              const imageUrl = getSanityImageUrl(image);
+              const isChoosenY = image?.isChoosen ?? false;
+              return (
                 <div
-                  onClick={() => {
-                    // if (!isChoosenY) {
+                  key={index}
+                  className="cursor-pointer flex flex-col items-center"
+                >
+                  <div
+                    onClick={() => {
+                      // if (!isChoosenY) {
                       setSelectedImage(imageUrl ?? null);
                       // setSelectedImageIndex(index);
-                    // }
-                  }}
-                >
-                  {imageUrl && (
-                    <Image
-                      src={imageUrl}
-                      alt="Doc Image"
-                      width={80}
-                      height={80}
-                      className={`rounded `}
+                      // }
+                    }}
+                  >
+                    {imageUrl && (
+                      <Image
+                        src={imageUrl}
+                        alt="Doc Image"
+                        width={80}
+                        height={80}
+                        className={`rounded `}
                         /* ${isChoosenY ? "opacity-50" : ""} */
-                    />
-                  )}
+                      />
+                    )}
+                  </div>
+                  <span className=" text-xs mt-1 text-gray-600">
+                    {isChoosenY ? "보았음" : "본적없음"}
+                  </span>
                 </div>
-                <span className=" text-xs mt-1 text-gray-600">
-                  {isChoosenY ? "보았음" : "본적없음"}
-                </span> 
-              </div>
-            );
-          })
-         ) : (
-          <p>이미지가 없습니다.</p>
-         )}
+              );
+            })
+          ) : (
+            <p>이미지가 없습니다.</p>
+          )}
         </div>
 
         {/* Consultation Form */}
-        {selectedCompany && selectedImage 
-        // && setSelectedImageIndex !== null 
-        && (
+        {selectedCompany && selectedImage && (
+          // && setSelectedImageIndex !== null
           <ConsultForm
-           visitId={ visit.id } company={ selectedCompany._id} visitDate={ visit.when }
-          //  imageIndex={selectedImageIndex}
-            />
+            visitId={visit.id}
+            company={selectedCompany._id}
+            visitDate={visit.when}
+            //  imageIndex={selectedImageIndex}
+          />
         )}
       </div>
     </div>

@@ -30,12 +30,6 @@ export default function RootLayout({
 }: Props) {
   return (
     <html lang="en" className={openSans.className}>
-      {/* <head>
-      <Script
-        src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
-        strategy="lazyOnload"
-      />
-      </head> */}
       <body className=" w-full max-w-screen-xl  overflow-auto mx-auto">
         <Administrator>
           <header className="sticky top-0 bg-white z-10 border-b">

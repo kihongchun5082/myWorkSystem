@@ -13,7 +13,7 @@ export async function GET(
   }
   const { company } = await context.params;
 
-  console.log('company_api/employee/[company]/route: ',company)
+  // console.log('company_api/employee/[company]/route: ',company)
 
   const { searchParams } = new URL(req.url);
   const employeeName = searchParams.get("employeeName");
@@ -28,12 +28,12 @@ export async function GET(
     if (employeeName && birthYear) {
       employees = await getEmployeeByCompany(company, employeeName, birthYear);
 
-      console.log('employees_api/employee/[company]/route-searchParams-getEmployeeByCompany: ',employees)
+      // console.log('employees_api/employee/[company]/route-searchParams-getEmployeeByCompany: ',employees)
 
     } else {
       employees = await getEmployeesByCompany(company);
 
-      console.log('employees_api/employee/[company]/route--getEmployeesByCompany: ',employees)
+      // console.log('employees_api/employee/[company]/route--getEmployeesByCompany: ',employees)
     }
 
     // console.log(

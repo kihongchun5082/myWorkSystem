@@ -1,8 +1,8 @@
 export type User = {
  name?: string | null;
- username: string;
- userId: string;
- email: string;
+ username?: string | null;
+ userId?: string | null;
+ email?: string | null;
  image?: string | null;
 } 
 

@@ -13,9 +13,9 @@ export default function EmployeeConsultsProfile({
   consultResults,
 }: Props) {
   
-  console.log("employee_EmployeeConsultsProfile: ", employee);
+  // console.log("employee_EmployeeConsultsProfile: ", employee);
 
-  console.log("consultResults_EmployeeConsultsProfile: ", consultResults);
+  // console.log("consultResults_EmployeeConsultsProfile: ", consultResults);
 
   return (
     <div className="border rounded-2xl shadow-lg p-5 bg-white hover:shadow-xl transition-shadow duration-300">

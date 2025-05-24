@@ -70,13 +70,13 @@ export default function ConsultForm({
         `/api/consults/${company}/${visitId}?employeeName=${employeeName}&birthYear=${birthYear}`
       );
 
-      console.log("res_components/ConsultForm: ", res);
+      // console.log("res_components/ConsultForm: ", res);
 
       const existingConsult = await res.json();
       // if (res.ok) {
       // const existingConsult = await res.json();
       
-      console.log("existingConsult_component/ConsultForm: ", existingConsult);
+      // console.log("existingConsult_component/ConsultForm: ", existingConsult);
 
       if (existingConsult) {
         // alert("⚠️ 이미 입력된 상담입니다.");
@@ -183,7 +183,7 @@ export default function ConsultForm({
 
       const existingConsult = await res.json();
 
-      console.log("existingConsult_component/ConsultForm: ", existingConsult);
+      // console.log("existingConsult_component/ConsultForm: ", existingConsult);
 
       if (existingConsult) {
         setConsultId(existingConsult._id); //consult id 저장

@@ -7,7 +7,7 @@ export async function PATCH(
   const { visitId } = await context.params;
   const { index } = await req.json();
   
-  console.log("index_visits[visitId]: ", index);
+  // console.log("index_visits[visitId]: ", index);
 
   try {
     const patchResult = await sanityClient
@@ -17,7 +17,7 @@ export async function PATCH(
       })
       .commit();
 
-      console.log('patchResult_api/visits/[company]/[visitId]/mark-image/route/PATCH: ',patchResult)
+      // console.log('patchResult_api/visits/[company]/[visitId]/mark-image/route/PATCH: ',patchResult)
 
     return NextResponse.json(patchResult);
   } catch (error) {

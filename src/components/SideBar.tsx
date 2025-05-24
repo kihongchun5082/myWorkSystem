@@ -1,15 +1,15 @@
+'use client'
 import { User } from "@/model/user";
 import Avatar from "./Avatar";
 
 type userType = {
  user: User;
 }
-// import { useSession } from "next-auth/react";
 
-// }
 export default function SideBarPage({ user: { name, username, image } }: userType) {
- // const {data: session} = useSession()
- // console.log('session_SideBar: ',session?.user)
+
+//  console.log('session_SideBar: ',session?.user)
+
  return (
   <>
     <h3 className=" text-center text-lg text-slate-600 mb-4">상담자</h3>

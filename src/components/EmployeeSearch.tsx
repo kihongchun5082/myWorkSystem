@@ -26,7 +26,7 @@ export default function EmployeeSearchPage() {
     error,
   } = useSWR<Employee[]>(shouldFetch ? query : null);
 
-  console.log("employees_component/EmployeeSearch: ", employees);
+  // console.log("employees_component/EmployeeSearch: ", employees);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();

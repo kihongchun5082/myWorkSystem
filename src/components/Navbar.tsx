@@ -8,9 +8,10 @@ import SearchFillIcon from "./ui/icons/SearchFillIcon";
 import NewIcon from "./ui/icons/NewIcon";
 import NewFillIcon from "./ui/icons/NewFillIcon";
 import ColoredButton from "./ui/ColoredButton";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import Avatar from "./Avatar";
 import CompanyIcon from "./ui/icons/CompanyIcon";
+import CompanyFillIcon from "./ui/icons/CompanyFillIcon";
 const menu = [
   {
     href: "/",
@@ -30,7 +31,7 @@ const menu = [
   {
     href: "/company",
     icon: <CompanyIcon />,
-    clickedIcon: <CompanyIcon />,
+    clickedIcon: <CompanyFillIcon />,
   },
 ];
   export default function Navbar() {
@@ -40,6 +41,8 @@ const menu = [
     const user = session?.user
     // console.log('session_Navbar: ',session)
     
+    // console.log("session_component_Navbar: ", session);
+      
   return (
     <div className=" flex justify-between items-center px-4">
       <Link href="/">
@@ -63,7 +66,7 @@ const menu = [
             )}
             <li>
               { session ? (
-                <ColoredButton text="로그아웃" onClick={() => signOut()} />
+                <ColoredButton text="로그아웃" onClick={() => signOut({ callbackUrl: "/"})} />
               ) : (
                 <ColoredButton text="로그인" onClick={() => signIn()} size="small"/>
               )}

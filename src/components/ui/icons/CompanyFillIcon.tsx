@@ -7,11 +7,11 @@ export default function CompanyIcon() {
  );
 } */
 
-import { BsBuildingAdd } from "react-icons/bs";
- export default function CompanyIcon() {
+import { BsBuildingFillAdd } from "react-icons/bs";
+ export default function CompanyFillIcon() {
   return (
    <div>
-    <BsBuildingAdd className=" w-7 h-7"/>
+    <BsBuildingFillAdd className=" w-7 h-7"/>
    </div>
   );
  }

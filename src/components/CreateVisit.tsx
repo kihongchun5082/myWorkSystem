@@ -10,7 +10,7 @@ import Image from "next/image";
 export default function NewVisit() {
   const { selectedCompany, setSelectedCompany } = useCompany();
 
-  console.log("selectedCompany_component/VisitCreate: ", selectedCompany);
+  // console.log("selectedCompany_component/VisitCreate: ", selectedCompany);
 
   const router = useRouter();
   const [dragging, setDragging] = useState(false);
@@ -83,11 +83,10 @@ export default function NewVisit() {
         console.log("📄 이름:", image.name);
         console.log("📦 타입:", image.type);
         console.log("📐 크기:", `${(image.size / 1024).toFixed(2)} KB`);
-        
       }
     });
 
-    // ✅ formData 내용 디버깅 출력
+    /* // ✅ formData 내용 디버깅 출력
     console.log("📦 FormData 내용(formData_component/VisitCreate): ");
     for (const [key, value] of formData.entries()) {
       if (value instanceof File) {
@@ -95,7 +94,7 @@ export default function NewVisit() {
       } else {
         console.log(key, value);
       }
-    }
+    } */
 
     try {
       const res = await fetch("/api/visits/new", {

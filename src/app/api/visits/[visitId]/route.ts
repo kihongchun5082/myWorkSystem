@@ -16,7 +16,7 @@ export async function GET(
   }
   const { visitId } = await context.params;
 
-  console.log("visitId_api/visits/[visitId]/route: ", visitId);
+  // console.log("visitId_api/visits/[visitId]/route: ", visitId);
 
   if (!visitId) {
    return new Response("Invalid request: Missing parameters", { status: 400 });
@@ -25,7 +25,7 @@ export async function GET(
   try {
     const visit = await getVisitByVisitId( visitId);
 
-    console.log("visit_api/visits/[visitId]/route/getVisitByVisitId: ", visit);
+    // console.log("visit_api/visits/[visitId]/route/getVisitByVisitId: ", visit);
 
     return NextResponse.json(visit);
   } catch (error) {

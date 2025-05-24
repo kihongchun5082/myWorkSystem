@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 export default function VisitListPage() {
   const { selectedCompany } = useCompany();
 
-  console.log("selectedCompany_component/VisitList: ", selectedCompany);
+  // console.log("selectedCompany_component/VisitList: ", selectedCompany);
 
   const router = useRouter()
 
@@ -25,7 +25,7 @@ export default function VisitListPage() {
   
   const { data: visits, isLoading: loadingVisits, mutate, } = useSWR<Visit[]>(`/api/visits?company=${selectedCompany?._id}`);
 
-  console.log("visits_component/VisitList: ", visits);
+  // console.log("visits_component/VisitList: ", visits);
 
   const handleDelete = async (visitId: string) => {
     const ok = confirm("정말 삭제하시겠습니까?")

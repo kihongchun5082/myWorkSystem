@@ -7,6 +7,7 @@ import VisitListPage from "@/components/VisitList";
 export default async function HomePage() {
   const session = await auth()
   const user = session?.user
+  // console.log('user_HomePage',user)
   if (!user) {
     redirect('/signin')
   } 

@@ -18,10 +18,10 @@ export async function PATCH(
     return new Response("Invalid JSON body", { status: 400 });
   }
 
-  console.log(
-    "body_api/consults/[company]/[visitId]/[consultId]/route/PATCH: ",
-    body
-  );
+  // console.log(
+  //   "body_api/consults/[company]/[visitId]/[consultId]/route/PATCH: ",
+  //   body
+  // );
 
   try {
     const cleanedBody: Partial<ConsultUpdateBody> = {};

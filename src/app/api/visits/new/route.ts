@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
       })
     );
 
-    console.log('uploadedImage: ',uploadedImages)
+    // console.log('uploadedImage: ',uploadedImages)
 
     const rawDate = visitedAt.replace(/-/g,"")
     // const docId = uuidv4();
@@ -74,7 +74,7 @@ export async function POST(req: NextRequest) {
     await sanityClient.createIfNotExists(newVisit);
     const result = NextResponse.json({ success: true, visitId: docId });
 
-    console.log("result: ", result);
+    // console.log("result: ", result);
 
     return result;
     // return NextResponse.json({ success: true

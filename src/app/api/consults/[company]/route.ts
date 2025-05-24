@@ -7,11 +7,11 @@ export async function POST(
 ) {
   const { company } = await context.params;
 
-  console.log("company_api/consults/[company]/route: ", company);
+  // console.log("company_api/consults/[company]/route: ", company);
 
   const body = await req.json();
 
-  console.log("body_api/consults/[company]/route: ", body);
+  // console.log("body_api/consults/[company]/route: ", body);
 
   if (!company) {
     return new Response("Invalid request: Missing parameters", { status: 400 });

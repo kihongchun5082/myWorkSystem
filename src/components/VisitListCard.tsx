@@ -11,7 +11,7 @@ export default function VisitListCard( { visit }: Props) {
 //  const { selectedCompany } = useCompany();  
  const { visitName, nurse, numberConsults, docImage } = visit
 
- console.log('visit_component/VisitListCard: ',visit)
+//  console.log('visit_component/VisitListCard: ',visit)
 
  return <article className=" rounded-lg shadow-md border-gray-500 ">
   <div className=" flex items-center p-2 ">
@@ -29,7 +29,7 @@ export default function VisitListCard( { visit }: Props) {
     <div className=" flex gap-2 m-2 overflow-auto  h-100 ml-2">
       {docImage?.map((image, index) => {
 
-        console.log('image_component/VisitListCard: ',image)
+        // console.log('image_component/VisitListCard: ',image)
 
         const imageUrl = getSanityImageUrl(image) || undefined ;
         

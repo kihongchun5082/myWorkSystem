@@ -28,8 +28,7 @@ export default function CompanyUpdatePage() {
     handleFileChange,
     // resetForm,
     searchAddress,
-  } = useCompanyForm();
-  // } = useCompanyForm(selectedCompany ?? undefined); 
+  } = useCompanyForm(selectedCompany ?? undefined);
 
   const handleUpdate = async () => {
     if (!selectedCompany) return;
