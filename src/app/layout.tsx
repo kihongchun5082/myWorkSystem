@@ -30,7 +30,7 @@ export default function RootLayout({
 }: Props) {
   return (
     <html lang="en" className={openSans.className}>
-      <body className=" w-full max-w-screen-xl  overflow-auto mx-auto">
+      <body className=" w-full max-w-screen-xl overflow-auto mx-auto">
         <Administrator>
           <header className="sticky top-0 bg-white z-10 border-b">
             <Navbar />

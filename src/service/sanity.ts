@@ -5,7 +5,76 @@ import { OAuthUser } from "@/model/user";
 import { Visit } from "@/model/visit";
 import imageUrlBuilder from "@sanity/image-url";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types";
+import sanityImageBuilder from "src/service/sanityImageBuilder";
 
+
+// lib/sanityImage.ts
+
+const builder = imageUrlBuilder(sanityClient);
+
+export function urlFor(source: SanityImageSource) {
+  if (
+    !source ||
+    typeof source !== "object" ||
+    !("asset" in source) ||
+    !source.asset ||
+    !(" _ref" in source.asset)
+  ) {
+    console.warn("⚠️ image 필드가 잘못된 형식입니다:", source);
+    return null;
+  }
+  return builder.image(source);
+}
+
+export const getSanityImageUrl = (
+  image: SanityImageSource | null | undefined
+): string | undefined => {
+  if (
+    !image ||
+    typeof image !== "object" ||
+    !("asset" in image) ||
+    !image.asset ||
+    typeof image.asset._ref !== "string"
+  ) {
+    console.warn("⚠️ 유효하지 않은 이미지 객체입니다:", image);
+    return undefined;
+  }
+
+  try {
+    return sanityImageBuilder.image(image).url();
+  } catch (error) {
+    console.error("🔴 이미지 URL 생성 실패:", error, image);
+    return undefined;
+  }
+}; 
+
+/* 
+export const getSanityImageUrl = (image: {
+  asset?: { _ref?: string };
+}): string | undefined => {
+  if (!image || !image.asset || typeof image.asset._ref !== "string") {
+    console.error(
+      "Invalid Sanity image object ⚠️ image 필드가 잘못된 형식입니다: ",
+      image
+    );
+    return undefined;
+  }
+  const baseUrl = `https://cdn.sanity.io/images/${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}/${process.env.NEXT_PUBLIC_SANITY_DATASET}`;
+
+  const ref = image.asset._ref
+    .replace("image-", "")
+    .replace("-png", ".png")
+    .replace("-jpg", ".jpg");
+  // const paramsStart = "?";
+  // const addParams = "&";
+  // const shape = "rect=70,20,120,150";
+  // const size = "h=500";
+
+  // return `${baseUrl}/${ref}${paramsStart}${size}`
+  return `${baseUrl}/${ref}`;
+  // return `${baseUrl}/${ref}${paramsStart}${shape}${addParams}${size}`
+};
+ */
 export async function addUser(
   user: OAuthUser
 ) {
@@ -29,34 +98,6 @@ export async function getVisits(): Promise<Visit[]> {
   "visitCompany": *[ _type == "company" && companyName._ref == ^._id]}`
   );
 }
-// {_id, visitName, visitedAt, nurseName, numCnslts, visitPhoto,
-
-export const getSanityImageUrl = (image: {
-  asset?: { _ref?: string };
-}): string | undefined => {
-  if (!image || !image.asset || typeof image.asset._ref !== "string") {
-    console.error(
-      "Invalid Sanity image object ⚠️ image 필드가 잘못된 형식입니다: ",
-      image
-    );
-    return undefined;
-  }
-
-  const baseUrl = `https://cdn.sanity.io/images/${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}/${process.env.NEXT_PUBLIC_SANITY_DATASET}`;
-
-  const ref = image.asset._ref
-    .replace("image-", "")
-    .replace("-png", ".png")
-    .replace("-jpg", ".jpg");
-  // const paramsStart = "?";
-  // const addParams = "&";
-  // const shape = "rect=70,20,120,150";
-  // const size = "h=500";
-
-  // return `${baseUrl}/${ref}${paramsStart}${size}`
-  return `${baseUrl}/${ref}`;
-  // return `${baseUrl}/${ref}${paramsStart}${shape}${addParams}${size}`
-};
 
 export async function getVisitsByCompany(company: string): Promise<Visit[]> {
   return sanityClient.fetch(
@@ -67,7 +108,7 @@ export async function getVisitsByCompany(company: string): Promise<Visit[]> {
     "when": visitedAt,
     "nurse": nurseName,
     "numberConsults": numCnslts,
-    "docImage": visitPhoto
+    "visitPhoto": visitPhoto
     }`
   );
 }
@@ -81,7 +122,7 @@ export async function getVisitByVisitId(visitId: string): Promise<Visit> {
       "when": visitedAt,
       "nurse": nurseName,
       "numberConsults": numCnslts,
-      "docImage": visitPhoto
+      "visitPhoto": visitPhoto
     }`,
     { visitId }
   );
@@ -220,20 +261,3 @@ export async function getConsultResultsByEmployeeByCompany(
   );
 }
 
-// lib/sanityImage.ts
-
-const builder = imageUrlBuilder(sanityClient);
-
-export function urlFor(source: SanityImageSource) {
-  if (
-    !source ||
-    typeof source !== "object" ||
-    !("asset" in source) ||
-    !source.asset ||
-    !(" _ref" in source.asset)
-  ) {
-    console.warn("⚠️ image 필드가 잘못된 형식입니다:", source);
-    return null;
-  }
-  return builder.image(source);
-}

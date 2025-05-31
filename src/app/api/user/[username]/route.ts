@@ -9,7 +9,7 @@ export async function GET(_: NextRequest, context: { params: Promise<{ username:
     { username }
   );
 
-  // console.log('user_api/user/[username]: ',user)
+  console.log('user_api/user/[username]: ',user)
 
   if (!user) {
     return new NextResponse("Not Found", { status: 404 });

@@ -130,7 +130,7 @@ export default function ConsultForm({
         headers: { "Content-Type": "application/json" },
       });
 
-      console.log("saveRes_component/consultForm", saveRes);
+      // console.log("saveRes_component/consultForm", saveRes);
 
       if (!saveRes.ok) {
         throw new Error("상담 저장 실패");
@@ -145,8 +145,8 @@ export default function ConsultForm({
       setIsEditMode(false);
       setConsultId(null);
 
-      // router.push(`/visits/${company}/${visitId}`)
-      router.replace(`/visits/${company}/${visitId}`);
+      // router.push(`/visits/${visitId}`)
+      router.replace(`/visits/${visitId}`);
       router.refresh();
       // window.location.reload()
       // setIsVerified(false);
@@ -220,6 +220,7 @@ export default function ConsultForm({
           smoking: existingConsult.smoking || "",
           drinking: existingConsult.drinking || "",
           exercise: existingConsult.exercise || "",
+          comments: existingConsult.comments || "",
         });
       }
     } catch (error) {

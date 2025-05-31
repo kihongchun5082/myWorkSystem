@@ -8,7 +8,9 @@ type Props = {
 };
 
 export default async function UserPage({ params }: Props) {
+
   const { username } = await params;
+  console.log('username_app/user/[username]: ', username)
 
   // 🔹 실제 유저가 존재하는지 확인하는 로직 필요
   const userExists = await checkUserExists(username); // 아래에서 정의

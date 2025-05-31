@@ -9,18 +9,19 @@ import useSWR from "swr";
 
 type SanityImageType = {
   _type: "image";
+  _key: string;
   asset: {
     _ref: string;
     _type: "reference";
   };
-  isChoosen?: boolean;
+  isConsulted?: boolean;
 };
 
 interface VisitData {
   id: string;
   visitName: string;
   when: string;
-  docImage?: SanityImageType[];
+  visitPhoto?: SanityImageType[];
 }
 
 export default function VisitDetailPage() {
@@ -28,6 +29,11 @@ export default function VisitDetailPage() {
   const { visitId } = useParams<{ visitId: string }>();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   // const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
+  // const [isChoosenY, setIsChoosenY] = useState<boolean | null>(null);
+
+  // console.log('selectedImage_app/visits/visitId/page: ',selectedImage)
+  // console.log('selectedImageIndex_app/visits/visitId/page: ',selectedImageIndex)
+  // console.log('isChoosenY_app/visits/visitId/page: ',isChoosenY)
 
   const {
     data: visit,
@@ -35,7 +41,7 @@ export default function VisitDetailPage() {
     error,
   } = useSWR<VisitData>(`/api/visits/${visitId}`);
 
-  // console.log("visit_app/visits/[company]/[visitId]/page: ", visit);
+  // console.log('visit_app/visits/[visitId]/page/useSWR: ',visit)
 
   if (error) return <p>이미지를 불러오는 중 오류가 발생했습니다.</p>;
   if (isLoading || !visit) return <p>로딩 중...</p>;
@@ -66,36 +72,59 @@ export default function VisitDetailPage() {
 
         {/* List Images */}
         <div className="flex gap-3 overflow-auto">
-          {visit?.docImage?.length ? (
-            visit.docImage.map((image, index) => {
+          {visit?.visitPhoto?.length ? (
+            visit.visitPhoto.map((image, index) => {
               const imageUrl = getSanityImageUrl(image);
-              const isChoosenY = image?.isChoosen ?? false;
+              if (!imageUrl) return null;
+
+              // const selectedImageIndex = index;
+              
+              // console.log('imageUrl_app/visit/visitId/page-return: ',imageUrl)
+              // console.log('selectedImageIndex_app/visit/visitId/page-return: ',selectedImageIndex)
+              // console.log('isChoosenY_app/visit/visitId/page-return: ',isChoosenY); 
+              // console.log(`image[${index}].isConsulted:`, image.isConsulted);
+              
               return (
                 <div
-                  key={index}
-                  className="cursor-pointer flex flex-col items-center"
+                key={index}
+                className="cursor-pointer flex flex-col items-center"
                 >
                   <div
-                    onClick={() => {
-                      // if (!isChoosenY) {
-                      setSelectedImage(imageUrl ?? null);
-                      // setSelectedImageIndex(index);
-                      // }
-                    }}
-                  >
+                    onClick={async () => {
+                        setSelectedImage(imageUrl ?? null);
+                        // setSelectedImageIndex(index);
+                        // setIsChoosenY(true);
+
+                        try {
+                          await fetch("/api/visits/images/consulted", {
+                            method: "PATCH",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                              visitId: visit.id,
+                              imageKey: image._key
+                            })
+                          })
+                        } catch (err) {
+                          console.error('isConsulted 업데이트 실패: ', err)
+                        }
+                      }}
+                      >
                     {imageUrl && (
                       <Image
+                        key={index}
                         src={imageUrl}
                         alt="Doc Image"
                         width={80}
                         height={80}
                         className={`rounded `}
-                        /* ${isChoosenY ? "opacity-50" : ""} */
+                        // ${isChoosenY} ? "opacity-50" : "" 
                       />
                     )}
                   </div>
                   <span className=" text-xs mt-1 text-gray-600">
-                    {isChoosenY ? "보았음" : "본적없음"}
+                    {/* {visit?.visitPhoto?.[index]?.isConsulted ? "보았음" : "본적없음"} */}
+                    { image.isConsulted ? "보았음" : "본적없음" }
+                    
                   </span>
                 </div>
               );
