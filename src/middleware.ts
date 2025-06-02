@@ -65,7 +65,7 @@ export async function middleware(req: NextRequest) {
 
     // 페이지 접근이면 로그인 페이지로 리다이렉트
     const signInUrl = new URL('/signin', req.url);
-    signInUrl.searchParams.set('callbackUrl', req.nextUrl.pathname);
+    signInUrl.searchParams.set('callbackUrl', req.nextUrl.href);
     return NextResponse.redirect(signInUrl);
   }
 
