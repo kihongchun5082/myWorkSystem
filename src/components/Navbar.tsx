@@ -66,7 +66,7 @@ const menu = [
             )}
             <li>
               { session ? (
-                <ColoredButton text="로그아웃" onClick={() => signOut({ callbackUrl: "/"})} />
+                <ColoredButton text="로그아웃" onClick={() => signOut({ callbackUrl: "/signin"})} />
               ) : (
                 <ColoredButton text="로그인" onClick={() => signIn()} size="small"/>
               )}

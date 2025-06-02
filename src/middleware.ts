@@ -17,7 +17,7 @@ export const config = {
  */
 
 // export { auth as middleware } from "@/auth"
-
+/* 
 import { getToken } from 'next-auth/jwt';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -47,3 +47,40 @@ export const config = {
     // '/',
   ],
 };
+ */
+import { getToken } from 'next-auth/jwt';
+import { NextRequest, NextResponse } from 'next/server';
+
+export async function middleware(req: NextRequest) {
+  const token = await getToken({ req, secret: process.env.AUTH_SECRET });
+
+  // 인증 실패 시 처리
+  if (!token) {
+    const { pathname } = req.nextUrl;
+
+    // API 요청이면 401 응답
+    if (pathname.startsWith('/api')) {
+      return new NextResponse('Authentication Error', { status: 401 });
+    }
+
+    // 페이지 접근이면 로그인 페이지로 리다이렉트
+    const signInUrl = new URL('/auth/signin', req.url);
+    signInUrl.searchParams.set('callbackUrl', req.nextUrl.pathname);
+    return NextResponse.redirect(signInUrl);
+  }
+
+  // 인증 성공 시 다음 단계로
+  return NextResponse.next();
+}
+
+// ✅ 인증을 요구할 경로들 설정
+export const config = {
+  matcher: [
+    '/new',
+    '/new/:path*',
+    '/',
+    '/visit',
+    '/visit/:path*',
+  ],
+};
+
