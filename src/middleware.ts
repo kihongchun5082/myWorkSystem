@@ -78,7 +78,6 @@ export const config = {
   matcher: [
     '/new',
     '/new/:path*',
-    '/',
     '/visit',
     '/visit/:path*',
   ],
